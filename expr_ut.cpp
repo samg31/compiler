@@ -24,6 +24,13 @@ int main()
 		assert( eval( and1 ) == true );
 		assert( eval( and2 ) == false );
 		assert( eval( and3 ) == false );
+
+		or_expr or1( t, t );
+		or_expr or2( t, f );
+		or_expr or3( f, f );
+		assert( eval( or1 ) == true );
+		assert( eval( or2 ) == true );
+		assert( eval( or3 ) == false );
 	}
 	
 	return 0;

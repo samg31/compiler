@@ -8,6 +8,7 @@ struct eval_visitor : expr::visitor
 	int r;
 	void visit( bool_expr& e );
 	void visit( and_expr& e );
+	void visit( or_expr& e );	 
 };
 
 int eval( expr& e );

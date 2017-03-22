@@ -7,5 +7,6 @@
 class expr;
 class bool_expr;
 class and_expr;
+class or_expr;
 
 #endif
