@@ -54,3 +54,18 @@ expr& or_expr::get_e2() const
 {
 	return e2;
 }
+
+not_expr::not_expr( expr& e1 )
+	:e1(e1)
+{
+}
+
+void not_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& not_expr::get_e1() const
+{
+	return e1;
+}

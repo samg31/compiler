@@ -19,6 +19,10 @@ void eval_visitor::visit( or_expr& e )
 	r = lhs || rhs;
 }
 
+void eval_visitor::visit( not_expr& e )
+{
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;

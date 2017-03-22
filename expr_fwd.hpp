@@ -8,5 +8,6 @@ class expr;
 class bool_expr;
 class and_expr;
 class or_expr;
+class not_expr;
 
 #endif
