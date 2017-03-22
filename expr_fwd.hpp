@@ -11,5 +11,6 @@ class or_expr;
 class not_expr;
 class cond_expr;
 class equal_expr;
+class inequal_expr;
 
 #endif

@@ -114,3 +114,23 @@ expr& equal_expr::get_e2() const
 {
 	return e2;
 }
+
+inequal_expr::inequal_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void inequal_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& inequal_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& inequal_expr::get_e2() const
+{
+	return e2;
+}
