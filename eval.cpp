@@ -26,6 +26,11 @@ void eval_visitor::visit( not_expr& e )
 
 void eval_visitor::visit( cond_expr& e )
 {
+	int condition = eval( e.get_e1() );
+	int lhs = eval( e.get_e2() );
+	int rhs = eval( e.get_e3() );
+
+	r = condition ? lhs : rhs;
 }
 
 int eval( expr& e )
