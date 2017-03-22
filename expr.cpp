@@ -69,3 +69,28 @@ expr& not_expr::get_e1() const
 {
 	return e1;
 }
+
+cond_expr::cond_expr( expr& e1, expr& e2, expr& e3 )
+	:e1( e1 ), e2( e2 ), e3( e3 )
+{
+}
+
+void cond_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& cond_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& cond_expr::get_e2() const
+{
+	return e2;
+}
+
+expr& cond_expr::get_e3() const
+{
+	return e3;
+}

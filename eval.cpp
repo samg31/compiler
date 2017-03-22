@@ -24,6 +24,10 @@ void eval_visitor::visit( not_expr& e )
 	r = !eval( e.get_e1() );
 }
 
+void eval_visitor::visit( cond_expr& e )
+{
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;

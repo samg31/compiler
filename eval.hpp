@@ -10,6 +10,7 @@ struct eval_visitor : expr::visitor
 	void visit( and_expr& e );
 	void visit( or_expr& e );
 	void visit( not_expr& e );
+	void visit( cond_expr& e );
 };
 
 int eval( expr& e );
