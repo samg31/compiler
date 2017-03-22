@@ -44,6 +44,12 @@ int main()
 		cond_expr cond2( f, t, f );
 		assert( eval( cond1 ) == true );
 		assert( eval( cond2 ) == false );
+
+		// equality expressions
+		equal_expr equal1( t, t );
+		equal_expr equal2( t, f );
+		assert( eval( equal1 ) == true );
+		assert( eval( equal2 ) == false );
 	}
 	
 	return 0;
