@@ -4,10 +4,12 @@
 
 int main()
 {
+	// test that eval calls proper visitor
 	{
-		expr* e = new bool_expr( true );
+		bool_expr e( true );
 		int eval_test = eval( e );
 		assert( eval_test == true );
 	}
+	
 	return 0;
 }

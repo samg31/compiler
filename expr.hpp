@@ -14,7 +14,7 @@ public:
 
 struct expr::visitor
 {
-	virtual void visit( bool_expr* ) = 0;
+	virtual void visit( bool_expr& ) = 0;
 };
 
 class bool_expr : public expr

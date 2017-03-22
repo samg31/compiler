@@ -7,7 +7,7 @@ bool_expr::bool_expr( int value )
 
 void bool_expr::accept( visitor& v )
 {
-	v.visit( this );
+	v.visit( *this );
 }
 
 int bool_expr::get_value() const
