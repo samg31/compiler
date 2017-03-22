@@ -21,6 +21,7 @@ void eval_visitor::visit( or_expr& e )
 
 void eval_visitor::visit( not_expr& e )
 {
+	r = !eval( e.get_e1() );
 }
 
 int eval( expr& e )
