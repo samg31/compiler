@@ -18,6 +18,7 @@ struct expr::visitor
 	virtual void visit( or_expr& ) = 0;
 	virtual void visit( not_expr& ) = 0;
 	virtual void visit( cond_expr& ) = 0;
+	virtual void visit( equal_expr& ) = 0;
 };
 
 class bool_expr : public expr
@@ -71,6 +72,17 @@ public:
 	expr& get_e1() const;
 	expr& get_e2() const;
 	expr& get_e3() const;
+};
+
+class equal_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	equal_expr( expr&, expr& );
+	void accept( visitor& v );
+	expr& get_e1() const;
+	expr& get_e2() const;
 };
 
 #endif

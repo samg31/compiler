@@ -33,6 +33,10 @@ void eval_visitor::visit( cond_expr& e )
 	r = condition ? lhs : rhs;
 }
 
+void eval_visitor::visit( equal_expr& e )
+{
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;

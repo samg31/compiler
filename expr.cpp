@@ -94,3 +94,23 @@ expr& cond_expr::get_e3() const
 {
 	return e3;
 }
+
+equal_expr::equal_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void equal_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& equal_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& equal_expr::get_e2() const
+{
+	return e2;
+}
