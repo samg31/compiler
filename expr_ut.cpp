@@ -50,6 +50,11 @@ int main()
 		equal_expr equal2( t, f );
 		assert( eval( equal1 ) == true );
 		assert( eval( equal2 ) == false );
+
+		inequal_expr inequal1( t, t );
+		inequal_expr inequal2( t, f );
+		assert( eval( inequal1 ) == false );
+		assert( eval( inequal2 ) == true );
 	}
 	
 	return 0;
