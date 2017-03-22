@@ -36,9 +36,14 @@ int main()
 		// not expressions
 		not_expr not1( t );
 		not_expr not2( f );
-
 		assert( eval( not1 ) == false );
 		assert( eval( not2 ) == true );
+
+		// conditional expressions
+		cond_expr cond1( t, t, f );
+		cond_expr cond2( f, t, f );
+		assert( eval( cond1 ) == true );
+		assert( eval( cond2 ) == false );
 	}
 	
 	return 0;
