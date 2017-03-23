@@ -15,6 +15,8 @@ struct eval_visitor : expr::visitor
 	void visit( inequal_expr& e );
 	void visit( int_expr& e );
 	void visit( neg_expr& e );
+	void visit( add_expr& e );
+	void visit( sub_expr& e );
 };
 
 int eval( expr& e );

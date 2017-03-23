@@ -15,5 +15,7 @@ class inequal_expr;
 
 class int_expr;
 class neg_expr;
+class add_expr;
+class sub_expr;
 
 #endif

@@ -164,3 +164,39 @@ expr& neg_expr::get_e1() const
 {
 	return e1;
 };
+
+add_expr::add_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void add_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& add_expr::get_e1() const
+{
+}
+
+expr& add_expr::get_e2() const
+{
+}
+
+sub_expr::sub_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void sub_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& sub_expr::get_e1() const
+{
+}
+
+expr& sub_expr::get_e2() const
+{
+}

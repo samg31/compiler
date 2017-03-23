@@ -22,6 +22,8 @@ struct expr::visitor
 	virtual void visit( inequal_expr& ) = 0;
 	virtual void visit( int_expr& ) = 0;
 	virtual void visit( neg_expr& ) = 0;
+	virtual void visit( add_expr& ) = 0;
+	virtual void visit( sub_expr& ) = 0;
 };
 
 class bool_expr : public expr
@@ -115,6 +117,28 @@ public:
 	neg_expr( expr& );
 	void accept( visitor& ) override;
 	expr& get_e1() const;
+};
+
+class add_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	add_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
+};
+
+class sub_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	sub_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
 };
 
 #endif
