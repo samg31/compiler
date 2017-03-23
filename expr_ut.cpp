@@ -51,10 +51,17 @@ int main()
 		assert( eval( equal1 ) == true );
 		assert( eval( equal2 ) == false );
 
+		// inequality expressions
 		inequal_expr inequal1( t, t );
 		inequal_expr inequal2( t, f );
 		assert( eval( inequal1 ) == false );
 		assert( eval( inequal2 ) == true );
+	}
+
+	// int_expr efficacy
+	{
+		int_expr int1( 43 );
+		assert( eval( int_expr ) == 43 );
 	}
 	
 	return 0;
