@@ -162,4 +162,5 @@ void neg_expr::accept( visitor& v )
 
 expr& neg_expr::get_e1() const
 {
+	return e1;
 };
