@@ -51,6 +51,7 @@ void eval_visitor::visit( inequal_expr& e )
 
 void eval_visitor::visit( int_expr& e )
 {
+	r = e.get_value();
 }
 
 int eval( expr& e )

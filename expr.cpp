@@ -136,7 +136,13 @@ expr& inequal_expr::get_e2() const
 }
 
 int_expr::int_expr( int value )
+	:value( value )
 {
+}
+
+int int_expr::get_value() const
+{
+	return value;
 }
 
 void int_expr::accept( visitor& v )
