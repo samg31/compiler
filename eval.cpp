@@ -54,6 +54,10 @@ void eval_visitor::visit( int_expr& e )
 	r = e.get_value();
 }
 
+void eval_visitor::visit( neg_expr& e )
+{
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;

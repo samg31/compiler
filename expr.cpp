@@ -149,3 +149,17 @@ void int_expr::accept( visitor& v )
 {
 	v.visit( *this );
 }
+
+neg_expr::neg_expr( expr& e )
+	:e1( e )
+{
+}
+
+void neg_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& neg_expr::get_e1() const
+{
+};
