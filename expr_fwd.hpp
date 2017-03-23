@@ -13,4 +13,6 @@ class cond_expr;
 class equal_expr;
 class inequal_expr;
 
+class int_expr;
+
 #endif

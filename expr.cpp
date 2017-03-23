@@ -134,3 +134,12 @@ expr& inequal_expr::get_e2() const
 {
 	return e2;
 }
+
+int_expr::int_expr( int value )
+{
+}
+
+void int_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}

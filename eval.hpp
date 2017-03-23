@@ -13,6 +13,7 @@ struct eval_visitor : expr::visitor
 	void visit( cond_expr& e );
 	void visit( equal_expr& e );
 	void visit( inequal_expr& e );
+	void visit( int_expr& e );
 };
 
 int eval( expr& e );

@@ -49,6 +49,10 @@ void eval_visitor::visit( inequal_expr& e )
 	r = (lhs != rhs);
 }
 
+void eval_visitor::visit( int_expr& e )
+{
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;
