@@ -84,7 +84,7 @@ int main()
 
 		sub_expr sub1( int1, int2 );
 		sub_expr sub2( int1, neg1 );
-		assert( eval( sub1 ) == -50 );
+		assert( eval( sub1 ) == 50 );
 		assert( eval( sub2 ) == 200 );
 	}
 	

@@ -177,10 +177,12 @@ void add_expr::accept( visitor& v )
 
 expr& add_expr::get_e1() const
 {
+	return e1;
 }
 
 expr& add_expr::get_e2() const
 {
+	return e2;
 }
 
 sub_expr::sub_expr( expr& e1, expr& e2 )
@@ -195,8 +197,10 @@ void sub_expr::accept( visitor& v )
 
 expr& sub_expr::get_e1() const
 {
+	return e1;
 }
 
 expr& sub_expr::get_e2() const
 {
+	return e2;
 }

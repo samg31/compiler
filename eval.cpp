@@ -61,10 +61,14 @@ void eval_visitor::visit( neg_expr& e )
 
 void eval_visitor::visit( add_expr& e )
 {
+	r = eval( e.get_e1() ) +
+		eval( e.get_e2() );
 }
 
 void eval_visitor::visit( sub_expr& e )
 {
+	r = eval( e.get_e1() ) -
+		eval( e.get_e2() );	
 }
 
 int eval( expr& e )
