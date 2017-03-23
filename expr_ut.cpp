@@ -61,7 +61,14 @@ int main()
 	// int_expr efficacy
 	{
 		int_expr int1( 43 );
-		assert( eval( int_expr ) == 43 );
+		assert( eval( int1 ) == 43 );
+	}
+
+	// neg_expr efficacy
+	{
+		int_expr int1( 43 );
+		neg_expr neg1( int1 );
+		assert( eval( neg1 ) == -43 );
 	}
 	
 	return 0;
