@@ -70,6 +70,23 @@ int main()
 		neg_expr neg1( int1 );
 		assert( eval( neg1 ) == -43 );
 	}
+
+	// efficacy of add_expr and sub_expr
+	{
+		int_expr int1( 100 );
+		int_expr int2( 50 );
+		neg_expr neg1( int1 );
+
+		add_expr add1( int1, int2 );
+		add_expr add2( int1, neg1 );
+		assert( eval( add1 ) == 150 );
+		assert( eval( add2 ) == 0 );
+
+		sub_expr sub1( int1, int2 );
+		sub_expr sub2( int1, neg1 );
+		assert( eval( sub1 ) == -50 );
+		assert( eval( sub2 ) == 200 );
+	}
 	
 	return 0;
 }
