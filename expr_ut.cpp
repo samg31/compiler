@@ -102,6 +102,38 @@ int main()
 		rem_expr rem1( int1, int2 );
 		assert( eval( rem1 ) == 0 );
 	}
+
+	// relational expressions
+	{
+		int_expr int1( 100 );
+		int_expr int2( 50 );
+
+		less_expr l1 ( int1, int2 );
+		less_expr l2 ( int2, int1 );
+		assert( eval( l1 ) == false );
+		assert( eval( l2 ) == true );
+
+		greater_expr g1( int1, int2 );
+		greater_expr g2( int2, int1 );
+		assert( eval( g1 ) == true );
+		assert( eval( g2 ) == false );
+
+		lesseq_expr le1( int1, int2 );
+		lesseq_expr le2( int2, int1 );
+		lesseq_expr le3( int1, int1 );
+		assert( eval( le1 ) == false );
+		assert( eval( le2 ) == true );
+		assert( eval( le3 ) == true );
+		
+		greatereq_expr ge1( int1, int2 );
+		greatereq_expr ge2( int2, int1 );
+		greatereq_expr ge3( int1, int1 );
+		assert( eval( ge1 ) == true );
+		assert( eval( ge2 ) == false );
+		assert( eval( ge3 ) == true );
+		
+		
+	}
 	
 	return 0;
 }
