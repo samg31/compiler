@@ -204,3 +204,45 @@ expr& sub_expr::get_e2() const
 {
 	return e2;
 }
+
+mul_expr::mul_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void mul_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& mul_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& mul_expr::get_e2() const
+{
+	return e2;
+}
+
+div_expr::div_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void div_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& div_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& div_expr::get_e2() const
+{
+	return e2;
+}
+
+

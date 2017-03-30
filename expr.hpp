@@ -24,6 +24,8 @@ struct expr::visitor
 	virtual void visit( neg_expr& ) = 0;
 	virtual void visit( add_expr& ) = 0;
 	virtual void visit( sub_expr& ) = 0;
+	virtual void visit( mul_expr& ) = 0;
+	virtual void visit( div_expr& ) = 0;
 };
 
 class bool_expr : public expr
@@ -136,6 +138,28 @@ class sub_expr : public expr
 	expr& e2;
 public:
 	sub_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
+};
+
+class mul_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	mul_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
+};
+
+class div_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	div_expr( expr&, expr& );
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;

@@ -71,9 +71,22 @@ void eval_visitor::visit( sub_expr& e )
 		eval( e.get_e2() );	
 }
 
+void eval_visitor::visit( mul_expr& e )
+{
+	r = eval( e.get_e1() ) *
+		eval( e.get_e2() );	
+}
+
+void eval_visitor::visit( div_expr& e )
+{
+	r = eval( e.get_e1() ) /
+		eval( e.get_e2() );	
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;
 	e.accept( v );
 	return v.r;
 }
+
