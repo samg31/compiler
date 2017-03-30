@@ -21,4 +21,9 @@ class mul_expr;
 class div_expr;
 class rem_expr;
 
+class less_expr;
+class greater_expr;
+class lesseq_expr;
+class greatereq_expr;
+
 #endif

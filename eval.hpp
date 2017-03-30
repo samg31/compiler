@@ -20,6 +20,10 @@ struct eval_visitor : expr::visitor
 	void visit( mul_expr& e );
 	void visit( div_expr& e );
 	void visit( rem_expr& e );
+	void visit( less_expr& e );
+	void visit( greater_expr& e );
+	void visit( lesseq_expr& e );
+	void visit( greatereq_expr& e );
 };
 
 int eval( expr& e );

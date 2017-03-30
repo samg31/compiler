@@ -27,6 +27,10 @@ struct expr::visitor
 	virtual void visit( mul_expr& ) = 0;
 	virtual void visit( div_expr& ) = 0;
 	virtual void visit( rem_expr& ) = 0;
+	virtual void visit( less_expr& ) = 0;
+	virtual void visit( greater_expr& ) = 0;
+	virtual void visit( lesseq_expr& ) = 0;
+	virtual void visit( greatereq_expr& ) = 0;
 };
 
 class bool_expr : public expr
@@ -172,6 +176,50 @@ class rem_expr : public expr
 	expr& e2;
 public:
 	rem_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
+};
+
+class less_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	less_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
+};
+
+class greater_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	greater_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
+};
+
+class lesseq_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	lesseq_expr( expr&, expr& );
+	void accept( visitor& );
+	expr& get_e1() const;
+	expr& get_e2() const;
+};
+
+class greatereq_expr : public expr
+{
+	expr& e1;
+	expr& e2;
+public:
+	greatereq_expr( expr&, expr& );
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;

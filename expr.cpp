@@ -264,3 +264,83 @@ expr& rem_expr::get_e2() const
 {
 	return e2;
 }
+
+less_expr::less_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void less_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& less_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& less_expr::get_e2() const
+{
+	return e2;
+}
+
+greater_expr::greater_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void greater_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& greater_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& greater_expr::get_e2() const
+{
+	return e2;
+}
+
+lesseq_expr::lesseq_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void lesseq_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& lesseq_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& lesseq_expr::get_e2() const
+{
+	return e2;
+}
+
+greatereq_expr::greatereq_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
+
+void greatereq_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& greatereq_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& greatereq_expr::get_e2() const
+{
+	return e2;
+}

@@ -89,6 +89,30 @@ void eval_visitor::visit( rem_expr& e )
 		eval( e.get_e2() );	
 }
 
+void eval_visitor::visit( less_expr& e )
+{
+	r = eval( e.get_e1() ) <
+		eval( e.get_e2() );	
+}
+
+void eval_visitor::visit( greater_expr& e )
+{
+	r = eval( e.get_e1() ) >
+		eval( e.get_e2() );	
+}
+
+void eval_visitor::visit( lesseq_expr& e )
+{
+	r = eval( e.get_e1() ) <=
+		eval( e.get_e2() );	
+}
+
+void eval_visitor::visit( greatereq_expr& e )
+{
+	r = eval( e.get_e1() ) >=
+		eval( e.get_e2() );	
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;
