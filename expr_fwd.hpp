@@ -19,5 +19,6 @@ class add_expr;
 class sub_expr;
 class mul_expr;
 class div_expr;
+class rem_expr;
 
 #endif

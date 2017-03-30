@@ -83,6 +83,12 @@ void eval_visitor::visit( div_expr& e )
 		eval( e.get_e2() );	
 }
 
+void eval_visitor::visit( rem_expr& e )
+{
+	r = eval( e.get_e1() ) %
+		eval( e.get_e2() );	
+}
+
 int eval( expr& e )
 {
 	eval_visitor v;

@@ -245,4 +245,22 @@ expr& div_expr::get_e2() const
 	return e2;
 }
 
+rem_expr::rem_expr( expr& e1, expr& e2 )
+	:e1( e1 ), e2( e2 )
+{
+}
 
+void rem_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+expr& rem_expr::get_e1() const
+{
+	return e1;
+}
+
+expr& rem_expr::get_e2() const
+{
+	return e2;
+}

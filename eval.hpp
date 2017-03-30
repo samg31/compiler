@@ -19,6 +19,7 @@ struct eval_visitor : expr::visitor
 	void visit( sub_expr& e );
 	void visit( mul_expr& e );
 	void visit( div_expr& e );
+	void visit( rem_expr& e );
 };
 
 int eval( expr& e );

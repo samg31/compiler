@@ -98,6 +98,9 @@ int main()
 
 		div_expr div1( int1, int2 );
 		assert( eval( div1 ) == 2 );
+
+		rem_expr rem1( int1, int2 );
+		assert( eval( rem1 ) == 0 );
 	}
 	
 	return 0;
