@@ -87,6 +87,18 @@ int main()
 		assert( eval( sub1 ) == 50 );
 		assert( eval( sub2 ) == 200 );
 	}
+
+	// mul_expr and div_expr
+	{
+		int_expr int1( 100 );
+		int_expr int2( 50 );
+		
+		mul_expr mul1( int1, int2 );
+		assert( eval( mul1 ) == 5000 );
+
+		div_expr div1( int1, int2 );
+		assert( eval( div1 ) == 2 );
+	}
 	
 	return 0;
 }
