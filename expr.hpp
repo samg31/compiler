@@ -42,6 +42,7 @@ public:
 	bool_expr( int, context& );
 	void accept( visitor& );
 	int get_value() const;
+	context& get_context() const;
 };
 
 class and_expr : public expr
@@ -54,6 +55,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class or_expr : public expr
@@ -66,6 +68,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class not_expr : public expr
@@ -76,6 +79,7 @@ public:
 	not_expr( expr&, context& );
 	void accept( visitor& );
 	expr& get_e1() const;
+	context& get_context() const;
 };
 
 class cond_expr : public expr
@@ -90,6 +94,7 @@ public:
 	expr& get_e1() const;
 	expr& get_e2() const;
 	expr& get_e3() const;
+	context& get_context() const;
 };
 
 class equal_expr : public expr
@@ -102,6 +107,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class inequal_expr : public expr
@@ -114,6 +120,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class int_expr : public expr
@@ -124,6 +131,7 @@ public:
 	int_expr( int value, context& );
 	void accept( visitor& );
 	int get_value() const;
+	context& get_context() const;
 };
 
 class neg_expr : public expr
@@ -134,6 +142,7 @@ public:
 	neg_expr( expr&, context& );
 	void accept( visitor& ) override;
 	expr& get_e1() const;
+	context& get_context() const;
 };
 
 class add_expr : public expr
@@ -146,6 +155,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class sub_expr : public expr
@@ -158,6 +168,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class mul_expr : public expr
@@ -170,6 +181,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class div_expr : public expr
@@ -182,6 +194,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class rem_expr : public expr
@@ -194,6 +207,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class less_expr : public expr
@@ -206,6 +220,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class greater_expr : public expr
@@ -218,6 +233,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class lesseq_expr : public expr
@@ -230,6 +246,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 class greatereq_expr : public expr
@@ -242,6 +259,7 @@ public:
 	void accept( visitor& );
 	expr& get_e1() const;
 	expr& get_e2() const;
+	context& get_context() const;
 };
 
 #endif

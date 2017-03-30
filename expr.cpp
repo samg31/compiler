@@ -16,6 +16,11 @@ int bool_expr::get_value() const
 	return value;
 }
 
+context& bool_expr::get_context() const
+{
+	return cxt;
+}
+
 and_expr::and_expr( expr& e1, expr& e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
@@ -34,6 +39,11 @@ expr& and_expr::get_e1() const
 expr& and_expr::get_e2() const
 {
 	return e2;
+}
+
+context& and_expr::get_context() const
+{
+	return cxt;
 }
 
 or_expr::or_expr( expr& e1, expr& e2, context& cxt )
@@ -56,6 +66,11 @@ expr& or_expr::get_e2() const
 	return e2;
 }
 
+context& or_expr::get_context() const
+{
+	return cxt;
+}
+
 not_expr::not_expr( expr& e1, context& cxt )
 	:e1(e1), cxt( cxt )
 {
@@ -69,6 +84,11 @@ void not_expr::accept( visitor& v )
 expr& not_expr::get_e1() const
 {
 	return e1;
+}
+
+context& not_expr::get_context() const
+{
+	return cxt;
 }
 
 cond_expr::cond_expr( expr& e1, expr& e2,
@@ -97,6 +117,11 @@ expr& cond_expr::get_e3() const
 	return e3;
 }
 
+context& cond_expr::get_context() const
+{
+	return cxt;
+}
+
 equal_expr::equal_expr( expr& e1, expr& e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
@@ -115,6 +140,11 @@ expr& equal_expr::get_e1() const
 expr& equal_expr::get_e2() const
 {
 	return e2;
+}
+
+context& equal_expr::get_context() const
+{
+	return cxt;
 }
 
 inequal_expr::inequal_expr( expr& e1, expr& e2, context& cxt )
@@ -137,6 +167,11 @@ expr& inequal_expr::get_e2() const
 	return e2;
 }
 
+context& inequal_expr::get_context() const
+{
+	return cxt;
+}
+
 int_expr::int_expr( int value, context& cxt )
 	:value( value ), cxt( cxt )
 {
@@ -150,6 +185,11 @@ int int_expr::get_value() const
 void int_expr::accept( visitor& v )
 {
 	v.visit( *this );
+}
+
+context& int_expr::get_context() const
+{
+	return cxt;
 }
 
 neg_expr::neg_expr( expr& e, context& cxt )
@@ -166,6 +206,11 @@ expr& neg_expr::get_e1() const
 {
 	return e1;
 };
+
+context& neg_expr::get_context() const
+{
+	return cxt;
+}
 
 add_expr::add_expr( expr& e1, expr& e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
@@ -185,6 +230,11 @@ expr& add_expr::get_e1() const
 expr& add_expr::get_e2() const
 {
 	return e2;
+}
+
+context& add_expr::get_context() const
+{
+	return cxt;
 }
 
 sub_expr::sub_expr( expr& e1, expr& e2, context& cxt )
@@ -207,6 +257,11 @@ expr& sub_expr::get_e2() const
 	return e2;
 }
 
+context& sub_expr::get_context() const
+{
+	return cxt;
+}
+
 mul_expr::mul_expr( expr& e1, expr& e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
@@ -225,6 +280,11 @@ expr& mul_expr::get_e1() const
 expr& mul_expr::get_e2() const
 {
 	return e2;
+}
+
+context& mul_expr::get_context() const
+{
+	return cxt;
 }
 
 div_expr::div_expr( expr& e1, expr& e2, context& cxt )
@@ -247,6 +307,11 @@ expr& div_expr::get_e2() const
 	return e2;
 }
 
+context& div_expr::get_context() const
+{
+	return cxt;
+}
+
 rem_expr::rem_expr( expr& e1, expr& e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
@@ -265,6 +330,11 @@ expr& rem_expr::get_e1() const
 expr& rem_expr::get_e2() const
 {
 	return e2;
+}
+
+context& rem_expr::get_context() const
+{
+	return cxt;
 }
 
 less_expr::less_expr( expr& e1, expr& e2, context& cxt )
@@ -287,6 +357,11 @@ expr& less_expr::get_e2() const
 	return e2;
 }
 
+context& less_expr::get_context() const
+{
+	return cxt;
+}
+
 greater_expr::greater_expr( expr& e1, expr& e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
@@ -305,6 +380,11 @@ expr& greater_expr::get_e1() const
 expr& greater_expr::get_e2() const
 {
 	return e2;
+}
+
+context& greater_expr::get_context() const
+{
+	return cxt;
 }
 
 lesseq_expr::lesseq_expr( expr& e1, expr& e2, context& cxt )
@@ -327,6 +407,11 @@ expr& lesseq_expr::get_e2() const
 	return e2;
 }
 
+context& lesseq_expr::get_context() const
+{
+	return cxt;
+}
+
 greatereq_expr::greatereq_expr( expr& e1, expr& e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
@@ -345,4 +430,9 @@ expr& greatereq_expr::get_e1() const
 expr& greatereq_expr::get_e2() const
 {
 	return e2;
+}
+
+context& greatereq_expr::get_context() const
+{
+	return cxt;
 }
