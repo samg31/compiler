@@ -30,7 +30,7 @@ char lexer::lookahead()
 	return ( eof() ) ? 0 : *first;	
 }
 
-token* lexer::next()
+token* lexer::lex()
 {
 	token* r = nullptr;
 	buf.clear();
@@ -185,6 +185,17 @@ token* lexer::next()
 
 			throw std::runtime_error( "unknown token encountered\n" );
 		}
+		tokens.push( r );
 	}
+	return r;
+}
+
+token* lexer::front()
+{
+	token* r = nullptr;
+	if( !tokens.empty() )
+		r = tokens.front();
+
+	tokens.pop();
 	return r;
 }

@@ -1,6 +1,8 @@
 #ifndef LEXER_HPP
 #define LEXER_HPP
 
+#include <queue>
+
 #include "token.hpp"
 #include "symbol.hpp"
 
@@ -13,6 +15,8 @@ class lexer
 	symbol_table& sym;    
     std::string buf;
 
+	std::queue<token*> tokens;
+
 public:
 	
     lexer( std::string::iterator first, std::string::iterator last,
@@ -21,7 +25,8 @@ public:
     char consume();
     char ignore();
     char lookahead();
-    token* next();
+    token* lex();
+	token* front();
 };
 	
 #endif
