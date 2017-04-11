@@ -14,6 +14,8 @@ int main()
 		symbol_table sym;
 		token* t;
 
+		input = "% && * ()    != == = :;\t\t\n";
+		input += "/ <> <= >=   ? -+ ^ !";
 
 		lexer l( input.begin(), input.end(), kw, sym );
 
