@@ -129,3 +129,12 @@ std::string id_token::kind()
 {
 	return std::string( "identifier" );
 }
+
+keyword_table::keyword_table()
+{
+	insert( { "true", true_kw_tok } );
+	insert( { "false", false_kw_tok } );
+	insert( { "var", var_kw_tok } );
+	insert( { "int", int_kw_tok } );
+	insert( { "bool", bool_kw_tok } );
+}
