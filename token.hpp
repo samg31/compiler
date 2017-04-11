@@ -16,7 +16,6 @@ enum token_kind
 	exclm_tok,
 	exclmeq_tok,
 	int_tok,
-	bool_tok,
 	equal_tok,
 	less_tok,
 	greater_tok,
@@ -76,7 +75,7 @@ class bool_token : public token
 {
 	int value;
 public:
-	bool_token( int );
+	bool_token( token_kind );
 	int get_value() const;
 	std::string kind() override;
 };

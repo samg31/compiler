@@ -1,4 +1,5 @@
 #include "token.hpp"
+#include <cassert>
 
 token::token( token_kind tk )
 	:tk( tk )
@@ -15,14 +16,21 @@ std::string int_token::kind()
 	return std::string( "int" );
 }
 
-bool_token::bool_token( int value )
-	:token( bool_tok ), value( value )
+bool_token::bool_token( token_kind tk )
+	:token( tk )
 {
+	assert( tk == true_kw_tok || tk == false_kw_tok );
+
+	value = ( tk == true_kw_tok ) ? true : false;
 }
 
 std::string bool_token::kind()
 {
-	return std::string( "bool" );
+	if( tk == true_kw_tok )
+		return std::string( "true_kw" );
+
+	if( tk == false_kw_tok )
+		return std::string( "false_kw" );
 }
 
 punc_token::punc_token( token_kind tk )
@@ -96,12 +104,6 @@ std::string punc_token::kind()
 		break;
 	case semicolon_tok:
 		return std::string( "semicolon" );
-		break;
-	case true_kw_tok:
-		return std::string( "true_kw" );
-		break;
-	case false_kw_tok:
-		return std::string( "false_kw" );
 		break;
 	case var_kw_tok:
 		return std::string( "var_kw" );
