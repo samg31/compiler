@@ -97,6 +97,21 @@ std::string punc_token::kind()
 	case semicolon_tok:
 		return std::string( "semicolon" );
 		break;
+	case true_kw_tok:
+		return std::string( "true_kw" );
+		break;
+	case false_kw_tok:
+		return std::string( "false_kw" );
+		break;
+	case var_kw_tok:
+		return std::string( "var_kw" );
+		break;
+	case int_kw_tok:
+		return std::string( "int_kw" );
+		break;
+	case bool_kw_tok:
+		return std::string( "bool_kw" );
+		break;
 	default:
 		return std::string( "invalid token" ); 
 		break;
