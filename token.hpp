@@ -50,7 +50,9 @@ protected:
 	token_kind tk;
 public:
 	token( token_kind tk );
+	token_kind get_kind() const { return tk; }
 	virtual std::string kind() = 0;
+	virtual std::string print_value() = 0;
 
 	virtual ~token() = default;
 };
@@ -62,6 +64,7 @@ public:
 	int_token( int );
 	int get_value() const;
 	std::string kind() override;
+	std::string print_value() override;
 };
 
 class bool_token : public token
@@ -71,6 +74,7 @@ public:
 	bool_token( token_kind );
 	int get_value() const;
 	std::string kind() override;
+	std::string print_value() override;
 };
 
 class punc_token : public token
@@ -78,6 +82,7 @@ class punc_token : public token
 public:
 	punc_token( token_kind tk );
 	std::string kind() override;
+	std::string print_value() override;
 };
 
 class id_token : public token
@@ -86,6 +91,7 @@ class id_token : public token
 public:
 	id_token( symbol& name );
 	std::string kind() override;
+	std::string print_value() override;
 };
 
 #endif

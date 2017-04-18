@@ -1,6 +1,8 @@
 #include <sstream>
+#include <iostream>
 
 #include "check.hpp"
+#include "eval.hpp"
 #include "translator.hpp"
 
 translator::translator( context& cxt )
@@ -173,7 +175,8 @@ expr_ptr translator::on_add( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new add_expr( ast_1, ast_2, m_cxt ) );
+	expr_ptr r = expr_ptr( new add_expr( ast_1, ast_2, m_cxt ) );
+	return std::move( r );
 }
 
 expr_ptr translator::on_sub( expr& ast_1, expr& ast_2 )

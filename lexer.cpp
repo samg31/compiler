@@ -1,5 +1,6 @@
 #include "lexer.hpp"
 #include <cctype>
+#include <iostream>
 
 lexer::lexer( std::string::iterator first, std::string::iterator last,
 	   keyword_table& kw, symbol_table& sym )
@@ -30,147 +31,207 @@ char lexer::lookahead()
 	return ( eof() ) ? 0 : *first;	
 }
 
-token* lexer::lex()
+void lexer::lex()
 {
-	token* r = nullptr;
-	buf.clear();
+	token_ptr r = nullptr;
 	while( !eof() )
 	{
+		buf.clear();
 		switch( lookahead() )
 		{
 		case '(':
+		{
 			consume();
-			r = new punc_token( lparen_tok );
+			r = token_ptr( new punc_token( lparen_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case ')':
+		{
 			consume();
-			r = new punc_token( rparen_tok );
+			r = token_ptr( new punc_token( rparen_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '&':
+		{
 			consume();
 			if( lookahead() == '&' )
 			{
 				consume();
-				r = new punc_token( ampersand_tok );
+				r = token_ptr( new punc_token( ampersand_tok ) );
+				tokens.push( std::move( r ) );
 			}
+			else
+			{
+				throw std::runtime_error( "invalid token after '&'" );
+			}			
 			break;
+		}
 		case '|':
+		{
 			consume();		
 			if( lookahead() == '|' )
 			{
 				consume();
-				r = new punc_token( bar_tok );
+				r = token_ptr( new punc_token( bar_tok ) );
+				tokens.push( std::move( r ) );
+			}
+			else
+			{
+				throw std::runtime_error( "invalid token after '|'" );
 			}
 			break;
+		}
 		case '^':
+		{
 			consume();
-			r = new punc_token( caret_tok );
+			r = token_ptr( new punc_token( caret_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '!':
+		{
 			consume();
 			if( lookahead() == '=' )
 			{
 				consume();
-				r = new punc_token( exclmeq_tok );
+				r = token_ptr( new punc_token( exclmeq_tok ) );
+				tokens.push( std::move( r ) );
 			}
-			r = new punc_token( exclm_tok );
+			else
+			{
+				r = token_ptr( new punc_token( exclm_tok ) );
+				tokens.push( std::move( r ) );
+			}
 			break;
+		}
 		case '+':
+		{
 			consume();
-			r = new punc_token( plus_tok );
+			r = token_ptr( new punc_token( plus_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '-':
+		{
 			consume();
-			r = new punc_token( minus_tok );
+			r = token_ptr( new punc_token( minus_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '*':
+		{
 			consume();
-			r = new punc_token( asterix_tok );
+			r = token_ptr( new punc_token( asterix_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '/':
+		{
 			consume();
-			r = new punc_token( slash_tok );
+			r = token_ptr( new punc_token( slash_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '%':
+		{
 			consume();
-			r = new punc_token( percent_tok );
+			r = token_ptr( new punc_token( percent_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '?':
+		{
 			consume();
-			r = new punc_token( question_tok );
+			r = token_ptr( new punc_token( question_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case ':':
+		{
 			consume();
-			r = new punc_token( colon_tok );
+			r = token_ptr( new punc_token( colon_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case ';':
+		{
 			consume();
-			r = new punc_token( semicolon_tok );
+			r = token_ptr( new punc_token( semicolon_tok ) );
+			tokens.push( std::move( r ) );
 			break;
+		}
 		case '<':
+		{
 			consume();
 			if( lookahead() == '=' )
 			{
 				consume();
-				r = new punc_token( lesseq_tok );
+				r = token_ptr( new punc_token( lesseq_tok ) );
+				tokens.push( std::move( r ) );
 			}
 			else
-				r = new punc_token( less_tok );
+			{
+				r = token_ptr( new punc_token( less_tok ) );
+				tokens.push( std::move( r ) );
+			}
 			break;
+		}
 		case '>':
+		{
 			consume();
 			if( lookahead() == '=' )
 			{
 				consume();
-				r = new punc_token( greatereq_tok );
+				r = token_ptr( new punc_token( greatereq_tok ) );
+				tokens.push( std::move( r ) );
 			}
 			else
-				r = new punc_token( greater_tok );
+			{
+				r = token_ptr( new punc_token( greater_tok ) );
+				tokens.push( std::move( r ) );
+			}
 			break;
+		}
 		case '=':
+		{
 			consume();
 			if( lookahead() == '=' )
 			{
 				consume();
-				r = new punc_token( equal_tok );
+				r = token_ptr( new punc_token( equal_tok ) );
+				tokens.push( std::move( r ) );
 			}
 			else
-				r = new punc_token( assign_tok );
+			{
+				r = token_ptr( new punc_token( assign_tok ) );
+				tokens.push( std::move( r ) );
+			}
 			break;
+		}
 		case '#':
+		{
 			while( lookahead() != '\n' )
 			{
 				ignore();
 			}
+		}
 		case ' ':
 		case '\t':
 		case '\n':
 			ignore();
 			continue;
 		default:
+		{
 			if( std::isalpha( lookahead() ) )
 			{				
 				do
 				{
 					consume();
 				} while( std::isalpha( lookahead() ) || std::isdigit( lookahead() ) );
+				word();
 
-				auto iter = kw.find( buf );
-
-				if( iter != kw.end() )
-				{
-					if( iter->first == "true" ||
-						iter->first == "false" )
-						r = new bool_token( iter->second );
-					else
-						r = new punc_token( iter->second );
-				}
-				else
-				{
-					// add new term to symbol table
-					auto name = sym.insert( buf );
-					r = new id_token( *name );
-				}
 			}
 			else if( std::isdigit( lookahead() ) )
 			{
@@ -178,24 +239,62 @@ token* lexer::lex()
 				{
 					consume();
 				} while( !eof() && std::isdigit( lookahead() ) );
-				int n = std::stoi( buf );
-				token* t = new int_token( n );
-				r = t;
+				number();
+				break;
 			}
-
-			throw std::runtime_error( "unknown token encountered\n" );
+			else
+				throw std::runtime_error( "unknown token encountered\n" );
 		}
-		tokens.push( r );
+		}
+	}	
+}
+
+token_ptr lexer::front()
+{
+	token_ptr r = nullptr;
+	if( !tokens.empty() )
+	{
+		r = std::move( tokens.front() );
+		tokens.pop();
 	}
+
 	return r;
 }
 
-token* lexer::front()
+void lexer::word()
 {
-	token* r = nullptr;
-	if( !tokens.empty() )
-		r = tokens.front();
+	token_ptr r = nullptr;
+	auto iter = kw.find( buf );
+	
+	if( iter != kw.end() )
+	{
+	
+		if( iter->first == "true" ||
+			iter->first == "false" )
+		{
+			r = token_ptr( new bool_token( iter->second ) );
+			tokens.push( std::move( r ) );
+		}
+		// if the buffer is a keyword, but not true/false
+		else
+		{
+			r = token_ptr( new punc_token( iter->second ) );
+			tokens.push( std::move( r ) );
+		}
+	}
+	// if the buffer is not a keyword at all, it is a new identifier
+	else
+	{
+		// add new term to symbol table
+		auto name = sym.insert( buf );
+		r = token_ptr( new id_token( *name ) );
+		tokens.push( std::move( r ) );
+	}
+}
 
-	tokens.pop();
-	return r;
+void lexer::number()
+{
+	int n = std::stoi( buf );
+	auto r = token_ptr( new int_token( n ) );
+	tokens.push( std::move( r ) );
 }

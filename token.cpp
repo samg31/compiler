@@ -16,6 +16,16 @@ std::string int_token::kind()
 	return std::string( "int" );
 }
 
+std::string int_token::print_value()
+{
+	return std::to_string( get_value() );
+}
+
+int int_token::get_value() const
+{
+	return value;
+}
+
 bool_token::bool_token( token_kind tk )
 	:token( tk )
 {
@@ -31,6 +41,16 @@ std::string bool_token::kind()
 
 	if( tk == false_kw_tok )
 		return std::string( "false_kw" );
+}
+
+std::string bool_token::print_value()
+{
+	return std::to_string( value );
+}
+
+int bool_token::get_value() const
+{
+	return value;
 }
 
 punc_token::punc_token( token_kind tk )
@@ -120,6 +140,11 @@ std::string punc_token::kind()
 	}
 }
 
+std::string punc_token::print_value()
+{
+	return std::string( "no value\n" );
+}
+
 id_token::id_token( symbol& name )
 	:token( id_tok ), name( name )
 {
@@ -128,6 +153,11 @@ id_token::id_token( symbol& name )
 std::string id_token::kind()
 {
 	return std::string( "identifier" );
+}
+
+std::string id_token::print_value()
+{
+	return std::string( "no value\n" );
 }
 
 keyword_table::keyword_table()

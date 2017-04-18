@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <cctype>
 
 #include "lexer.hpp"
 
@@ -24,17 +25,20 @@ void test1()
 	std::string input;
 	keyword_table kw;
 	symbol_table sym;
-	token* t;
+	token_ptr t;
 
 	input = "% && * ()    != == = :;\t\t\n";
 	input += "/ <> <= >=   ? -+ ^ !";
 
+	input = "false && false";
+
 	lexer l( input.begin(), input.end(), kw, sym );
 
 	l.lex();
-	while( t = l.front() )
+	while( t = std::move( l.front() ) )
 	{
 		std::cout << t->kind() << '\n';
+		std::cout << t->print_value() << '\n';
 	}
 }
 	

@@ -1,4 +1,5 @@
 #include "eval.hpp"
+#include <iostream>
 
 void eval_visitor::visit( bool_expr& e )
 {

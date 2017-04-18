@@ -1,12 +1,15 @@
 #include <cassert>
+#include <iostream>
 
 #include "parser.hpp"
 #include "check.hpp"
+#include "eval.hpp"
 
 parser::parser( lexer& l, context& cxt )
 	:m_lexer( l ), m_cxt( cxt ), sema( translator( cxt ) )
 {
-	if( auto token = m_lexer.front() )
+	m_lexer.lex();
+	if( auto token = std::move( m_lexer.front() ) )
 	{
 		tokens.push_front( std::move( token ) );
 	}
@@ -26,13 +29,15 @@ token_ptr parser::consume()
 
 	auto token = std::move( tokens.front() );
 	tokens.pop_front();
-
+	
 	if( tokens.empty() )
 	{
 		if( auto next = m_lexer.front() )
+		{
 			tokens.push_front( std::move( next ) );
+		}
 	}
-
+	
 	return token;
 }
 
@@ -46,7 +51,14 @@ token_ptr parser::match( token_kind tk )
 
 token_ptr parser::match_if( token_kind tk )
 {
-	return ( lookahead() == tk ) ? consume() : nullptr;
+	if ( lookahead() == tk )
+	{
+		return consume();
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 expr_ptr parser::expression()
@@ -158,17 +170,21 @@ expr_ptr parser::ordering_expression()
 expr_ptr parser::additive_expression()
 {
 	auto ast_1 = multiplicative_expression();
+	expr_ptr r;
 	while( true )
 	{
 		if( match_if( plus_tok ) )
 		{
 			auto ast_2 = multiplicative_expression();
-			ast_1 = sema.on_add( *ast_1, *ast_2 );
+			r = sema.on_add( *ast_1, *ast_2 );
+			std::cout << eval( *r ) << '\n';
+			return r;
 		}
 		else if( match_if( minus_tok ) )
 		{
 			auto ast_2 = multiplicative_expression();
-			ast_1 = sema.on_sub( *ast_1, *ast_2 );
+			r = sema.on_sub( *ast_1, *ast_2 );
+			return r;
 		}
 		else break;
 	}
@@ -220,28 +236,31 @@ expr_ptr parser::primary_expression()
 {
 	switch( lookahead() )
 	{
- 	// case int_tok:
-	// {
-	// 	int_token next = static_cast<inttoken*>( consume() );
-	// 	return new intexpr( next->value, cxt );
-	// 	break;
-	// }
+ 	case int_tok:
+	{
+		auto p = &(*consume() );
+		auto q = static_cast<int_token*>( p );
+		auto r = expr_ptr( new int_expr( q->get_value(), m_cxt ) );
+		return r;
+		break;
+	}
 	case true_kw_tok:
 	case false_kw_tok:
 	{
-		auto r = static_cast<bool_token*>( &(*consume()) );
-		return std::unique_ptr<bool_token>( new bool_token( r->get_kind() ) );
-		
+		auto next = static_cast<bool_token*>( &(*consume()) );
+		return expr_ptr( new bool_expr( next->get_value(), m_cxt ) );
 		break;
 	}
-	// case lparen_tok:
-	// {
-	// 	consume();
-	// 	auto e = expression();
-	// 	match( rparen );
-	// 	return e;
-	// }
+	case lparen_tok:
+	{
+		consume();
+		auto e = expression();
+		match( rparen_tok );
+		return e;
 	}
+	}
+
+	return nullptr;
 }
 
 	
