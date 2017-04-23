@@ -6,37 +6,48 @@
 #include "expr.hpp"
 #include "context.hpp"
 #include "token.hpp"
-
-using expr_ptr = std::unique_ptr<expr>;
+#include "decl.hpp"
+#include "stmt.hpp"
 
 class translator
 {
 	context& m_cxt;
 public:
 	translator( context& cxt );
-	expr_ptr on_cond( expr&, expr&, expr& );
-	expr_ptr on_or( expr&, expr& );
-	expr_ptr on_and( expr&, expr& );
+	expr* on_cond( expr&, expr&, expr& );
+	expr* on_or( expr&, expr& );
+	expr* on_and( expr&, expr& );
 
-	expr_ptr on_equal( expr&, expr& );
-	expr_ptr on_inequal( expr&, expr& );
+	expr* on_equal( expr&, expr& );
+	expr* on_inequal( expr&, expr& );
 	
-	expr_ptr on_less( expr&, expr& );
-	expr_ptr on_greater( expr&, expr& );
-	expr_ptr on_lesseq( expr&, expr& );
-	expr_ptr on_greatereq( expr&, expr& );
+	expr* on_less( expr&, expr& );
+	expr* on_greater( expr&, expr& );
+	expr* on_lesseq( expr&, expr& );
+	expr* on_greatereq( expr&, expr& );
 
-	expr_ptr on_add( expr&, expr& );
-	expr_ptr on_sub( expr&, expr& );
-	expr_ptr on_mul( expr&, expr& );
-	expr_ptr on_div( expr&, expr& );
-	expr_ptr on_rem( expr&, expr& );
+	expr* on_add( expr&, expr& );
+	expr* on_sub( expr&, expr& );
+	expr* on_mul( expr&, expr& );
+	expr* on_div( expr&, expr& );
+	expr* on_rem( expr&, expr& );
 
-	expr_ptr on_not( expr& );
-	expr_ptr on_neg( expr& );
+	expr* on_not( expr& );
+	expr* on_neg( expr& );
 	
-	expr_ptr on_bool( bool_token& );
-	expr_ptr on_int( int_token& );
+	expr* on_bool( bool_token& );
+	expr* on_int( int_token& );
+
+	stmt* on_decl_stmt( decl* );
+	stmt* on_expr_stmt( expr* );
+
+	decl* on_var_decl( const type*, symbol* );
+	decl* on_var_compl( decl*, expr* );
+
+	const type* on_bool_type() const;
+	const type* on_int_type() const;
+
+	symbol* on_id( token* t );
 
 };
 

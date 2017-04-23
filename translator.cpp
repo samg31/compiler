@@ -10,7 +10,7 @@ translator::translator( context& cxt )
 {
 }
 
-expr_ptr translator::on_cond( expr& ast_1, expr& ast_2, expr& ast_3 )
+expr* translator::on_cond( expr& ast_1, expr& ast_2, expr& ast_3 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -25,10 +25,10 @@ expr_ptr translator::on_cond( expr& ast_1, expr& ast_2, expr& ast_3 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 	
-	return expr_ptr( new cond_expr( ast_1, ast_2, ast_3, m_cxt ) );
+	return new cond_expr( ast_1, ast_2, ast_3, m_cxt );
 }
 
-expr_ptr translator::on_or( expr& ast_1, expr& ast_2 )
+expr* translator::on_or( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -43,10 +43,10 @@ expr_ptr translator::on_or( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 
-	return expr_ptr( new or_expr( ast_1, ast_2, m_cxt ) );
+	return new or_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_and( expr& ast_1, expr& ast_2 )
+expr* translator::on_and( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -61,10 +61,10 @@ expr_ptr translator::on_and( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 
-	return expr_ptr( new and_expr( ast_1, ast_2, m_cxt ) );
+	return new and_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_equal( expr& ast_1, expr& ast_2 )
+expr* translator::on_equal( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != check( ast_2 ) )
 	{
@@ -73,10 +73,10 @@ expr_ptr translator::on_equal( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 	
-	return expr_ptr( new equal_expr( ast_1, ast_2, m_cxt ) );
+	return new equal_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_inequal( expr& ast_1, expr& ast_2 )
+expr* translator::on_inequal( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != check( ast_2 ) )
 	{
@@ -85,10 +85,10 @@ expr_ptr translator::on_inequal( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 	
-	return expr_ptr( new inequal_expr( ast_1, ast_2, m_cxt ) );
+	return new inequal_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_less( expr& ast_1, expr& ast_2 )
+expr* translator::on_less( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -103,10 +103,10 @@ expr_ptr translator::on_less( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new less_expr( ast_1, ast_2, m_cxt ) );
+	return new less_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_greater( expr& ast_1, expr& ast_2 )
+expr* translator::on_greater( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -121,10 +121,10 @@ expr_ptr translator::on_greater( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new greater_expr( ast_1, ast_2, m_cxt ) );
+	return new greater_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_lesseq( expr& ast_1, expr& ast_2 )
+expr* translator::on_lesseq( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -139,10 +139,10 @@ expr_ptr translator::on_lesseq( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new lesseq_expr( ast_1, ast_2, m_cxt ) );
+	return new lesseq_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_greatereq( expr& ast_1, expr& ast_2 )
+expr* translator::on_greatereq( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -157,10 +157,10 @@ expr_ptr translator::on_greatereq( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new greatereq_expr( ast_1, ast_2, m_cxt ) );
+	return new greatereq_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_add( expr& ast_1, expr& ast_2 )
+expr* translator::on_add( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -175,11 +175,10 @@ expr_ptr translator::on_add( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	expr_ptr r = expr_ptr( new add_expr( ast_1, ast_2, m_cxt ) );
-	return std::move( r );
+	return new add_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_sub( expr& ast_1, expr& ast_2 )
+expr* translator::on_sub( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -194,10 +193,10 @@ expr_ptr translator::on_sub( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new sub_expr( ast_1, ast_2, m_cxt ) );
+	return new sub_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_mul( expr& ast_1, expr& ast_2 )
+expr* translator::on_mul( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -212,10 +211,10 @@ expr_ptr translator::on_mul( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new mul_expr( ast_1, ast_2, m_cxt ) );
+	return new mul_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_div( expr& ast_1, expr& ast_2 )
+expr* translator::on_div( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -230,10 +229,10 @@ expr_ptr translator::on_div( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new div_expr( ast_1, ast_2, m_cxt ) );
+	return new div_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_rem( expr& ast_1, expr& ast_2 )
+expr* translator::on_rem( expr& ast_1, expr& ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -248,10 +247,10 @@ expr_ptr translator::on_rem( expr& ast_1, expr& ast_2 )
 		throw std::runtime_error( ss.str().c_str() );		
 	}
 
-	return expr_ptr( new rem_expr( ast_1, ast_2, m_cxt ) );
+	return new rem_expr( ast_1, ast_2, m_cxt );
 }
 
-expr_ptr translator::on_not( expr& ast_1 )
+expr* translator::on_not( expr& ast_1 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -260,10 +259,10 @@ expr_ptr translator::on_not( expr& ast_1 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 
-	return expr_ptr( new not_expr( ast_1, m_cxt ) );
+	return new not_expr( ast_1, m_cxt );
 }
 
-expr_ptr translator::on_neg( expr& ast_1 )
+expr* translator::on_neg( expr& ast_1 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -272,5 +271,45 @@ expr_ptr translator::on_neg( expr& ast_1 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 
-	return expr_ptr( new neg_expr( ast_1, m_cxt ) );
+	return new neg_expr( ast_1, m_cxt );
+}
+
+stmt* translator::on_decl_stmt( decl* d )
+{
+	return new decl_stmt( d );
+}
+
+stmt* translator::on_expr_stmt( expr* e )
+{
+	return new expr_stmt( e );
+}
+
+decl* translator::on_var_decl( const type* t, symbol* n )
+{
+	var_decl* var = new var_decl( n, t );
+	// add the declaration of n as a variable
+	return var;
+}
+
+decl* translator::on_var_compl( decl* d, expr* e )
+{
+	var_decl* var = static_cast<var_decl*>( d );
+	var->set_init( e );
+	return var;
+}
+
+const type* translator::on_bool_type() const
+{
+	return &m_cxt.bool_ty;
+}
+
+const type* translator::on_int_type() const
+{
+	return &m_cxt.int_ty;
+}
+
+symbol* translator::on_id( token* t )
+{
+	auto id = dynamic_cast<id_token*>( t );
+	return id->get_name();
 }

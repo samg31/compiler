@@ -287,7 +287,7 @@ void lexer::word()
 	{
 		// add new term to symbol table
 		auto name = sym.insert( buf );
-		r = token_ptr( new id_token( *name ) );
+		r = token_ptr( new id_token( name ) );
 		tokens.push( std::move( r ) );
 	}
 }

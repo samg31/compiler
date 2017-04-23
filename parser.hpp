@@ -10,8 +10,8 @@
 #include "expr.hpp"
 #include "type.hpp"
 #include "translator.hpp"
-
-using expr_ptr = std::unique_ptr<expr>;
+#include "stmt.hpp"
+#include "decl.hpp"
 
 class parser
 {
@@ -27,16 +27,28 @@ public:
 	token_ptr match( token_kind tk );
 	token_ptr match_if( token_kind tk );
 	
-	expr_ptr expression();
-	expr_ptr additive_expression();
-	expr_ptr multiplicative_expression();
-	expr_ptr conditional_expression();
-	expr_ptr logical_or_expression();
-	expr_ptr logical_and_expression();
-	expr_ptr equality_expression();
-	expr_ptr ordering_expression();	
-	expr_ptr unary_expression();	
-	expr_ptr primary_expression();
+	expr* expression();
+	expr* additive_expression();
+	expr* multiplicative_expression();
+	expr* conditional_expression();
+	expr* logical_or_expression();
+	expr* logical_and_expression();
+	expr* equality_expression();
+	expr* ordering_expression();	
+	expr* unary_expression();	
+	expr* primary_expression();
+
+	stmt* statement();
+	stmt* declaration_statement();
+	stmt* expression_statement();
+
+	decl* declaration();
+	decl* variable_declaration();
+
+	const type* type_specifier();
+
+	symbol* identifier();
+
 };
 
 
