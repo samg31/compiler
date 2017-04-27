@@ -21,8 +21,9 @@ class parser
 	std::list<scope>& m_stack;
 	std::deque<token_ptr> tokens;
 	translator sema;
+	value_map& m_values;
 public:	
-	parser( lexer& l, context& cxt, std::list<scope>& m_scope );
+	parser( lexer&, context&, std::list<scope>&, value_map& );
 
 	token_kind lookahead();
 	token_ptr consume();
@@ -30,6 +31,7 @@ public:
 	token_ptr match_if( token_kind tk );
 	
 	expr* expression();
+	expr* assignment_expression();
 	expr* additive_expression();
 	expr* multiplicative_expression();
 	expr* conditional_expression();

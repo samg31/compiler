@@ -6,8 +6,8 @@
 #include "translator.hpp"
 #include "util.hpp"
 
-translator::translator( context& cxt, std::list<scope>& stack )
-	:m_cxt( cxt ), m_stack( stack ), next_type()
+translator::translator( context& cxt, std::list<scope>& stack, value_map& vm )
+	:m_cxt( cxt ), m_stack( stack ), m_values( vm ), next_type()
 {
 }
 
@@ -283,14 +283,35 @@ expr* translator::on_ref( id_token& identifier )
 	if( !declaration )
 	{
 		std::stringstream ss;
-		ss << "Use of undeclared identifier " << identifier.get_name()
-		   << '\n';
+		// ss << "Use of undeclared identifier " << identifier.get_name() << '\n';
 		throw std::runtime_error( ss.str().c_str() );
 	}
-			
+
 	auto val = static_cast<var_decl*>( declaration );
+	auto it = m_values.find( declaration );
 	auto ty = val->m_type;
-	return new ref_expr( declaration, val->m_init, ty, m_cxt );
+	return new ref_expr( declaration, it->second, ty, m_cxt );
+}
+
+expr* translator::on_assign( expr* ast_1, expr* ast_2 )
+{
+	auto var = static_cast<ref_expr*>( ast_1 );
+	auto ref = static_cast<var_decl*>( var->get_reference() );
+	auto declaration = scope_lookup( m_stack, ref->m_name );
+
+	// if the declaration was not found in any scope
+	if( !declaration )
+	{
+		std::stringstream ss;
+		// ss << "Use of undeclared identifier " << identifier.get_name() << '\n';
+		throw std::runtime_error( ss.str().c_str() );
+	}
+
+	var->set_value( ast_2 );
+	auto it = m_values.find( declaration );
+	it->second = ast_2;
+	
+	return var;
 }
 
 stmt* translator::on_decl_stmt( decl* d )
@@ -306,9 +327,11 @@ stmt* translator::on_expr_stmt( expr* e )
 decl* translator::on_var_decl( const type* t, symbol* n )
 {
 	var_decl* var = new var_decl( n, t );
+
 	// add the declaration to the scope
 	if( m_stack.front().insert( n, var ) )
 		return var;
+	
 	// insertion will fail if this (name,decl) mapping already exists
 	else
 	{
@@ -324,6 +347,7 @@ decl* translator::on_var_compl( decl* d, expr* e )
 	var->m_type = next_type;
 	next_type = nullptr;
 	var->set_init( e );
+	m_values.insert( {d, e} );
 	return var;
 }
 

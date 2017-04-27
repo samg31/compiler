@@ -2,12 +2,14 @@
 #include <iostream>
 
 #include "parser.hpp"
+#include "util.hpp"
 #include "check.hpp"
 #include "eval.hpp"
 #include "context.hpp"
 
-parser::parser( lexer& l, context& cxt, std::list<scope>& stack )
-	:m_lexer( l ), m_cxt( cxt ), sema( translator( cxt, stack ) ), m_stack( stack )
+parser::parser( lexer& l, context& cxt, std::list<scope>& stack, value_map& vm )
+	:m_lexer( l ), m_cxt( cxt ), sema( translator( cxt, stack, vm ) ),
+	 m_stack( stack ), m_values( vm )
 {
 	m_lexer.lex();
 	if( auto token = std::move( m_lexer.front() ) )
@@ -64,7 +66,23 @@ token_ptr parser::match_if( token_kind tk )
 
 expr* parser::expression()
 {
-	return conditional_expression();
+	return assignment_expression();
+}
+
+expr* parser::assignment_expression()
+{
+	auto ast_1 = conditional_expression();
+
+	while( true )
+	{
+		if( match_if( assign_tok ) )
+		{
+			auto ast_2 = logical_or_expression();
+			ast_1 = sema.on_assign( ast_1, ast_2 );
+		}
+		else break;
+	}
+	return ast_1;
 }
 
 expr* parser::conditional_expression()
@@ -78,7 +96,7 @@ expr* parser::conditional_expression()
 
 			match( colon_tok );
 			
-			auto ast_3 = expression();
+			auto ast_3 = assignment_expression();
 			ast_1 = std::move( sema.on_cond( *ast_1, *ast_2, *ast_3 ) );
 		}
 		else break;
@@ -295,18 +313,30 @@ stmt* parser::statement()
 stmt* parser::print_statement()
 {
 	consume();
+
+	// analyze expressions to print until end of statement
 	auto e = expression();
 	match( semicolon_tok );
+
+	// print the evaluation of the expression
 	std::cout << eval( *e ) << '\n';
 
-	// return null because this function does not generate actual code
+	// return null because prints do not generate actual code
 	return nullptr;
 }
 
-stmt* block_statement()
+stmt* parser::block_statement()
 {
 	// enter a new block scope
 	m_stack.emplace_front();
+	stmt_seq seq;
+	
+	while( lookahead() != rbrace_tok )
+	{
+		seq.push_back( statement() );
+	}
+
+	match( rbrace_tok );
 }
 
 stmt* parser::declaration_statement()

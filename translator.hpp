@@ -11,13 +11,16 @@
 #include "stmt.hpp"
 #include "scope.hpp"
 
+using value_map = std::unordered_map<decl*, expr*>;
+
 class translator
 {
 	context& m_cxt;
 	std::list<scope>& m_stack;
+	value_map& m_values;
 	const type* next_type;
 public:
-	translator( context&, std::list<scope>& );
+	translator( context&, std::list<scope>&, value_map& );
 	expr* on_cond( expr&, expr&, expr& );
 	expr* on_or( expr&, expr& );
 	expr* on_and( expr&, expr& );
@@ -43,6 +46,7 @@ public:
 	expr* on_int( int_token& );
 
 	expr* on_ref( id_token& );
+	expr* on_assign( expr*, expr* );
 
 	stmt* on_decl_stmt( decl* );
 	stmt* on_expr_stmt( expr* );

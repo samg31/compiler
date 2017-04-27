@@ -14,6 +14,7 @@
 #include "scope.hpp"
 
 using stack = std::list<scope>;
+using value_map = std::unordered_map<decl*, expr*>;
 
 int main()
 {
@@ -21,6 +22,7 @@ int main()
 	keyword_table kw;
 	symbol_table sym;
 	stack stk;
+	value_map vm;
 
 	// push the global scope
 	stk.emplace_front();
@@ -37,7 +39,7 @@ int main()
 		// input = "5 + 7;";
 		lexer l ( input.begin(), input.end(), kw, sym );
 
-		parser p( l, context, stk );
+		parser p( l, context, stk, vm );
 		stmt* s = p.statement();
 		// if( dynamic_cast<expr_stmt*>(s) )
 		// {
