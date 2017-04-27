@@ -145,9 +145,14 @@ std::string punc_token::print_value()
 	return std::string( "no value\n" );
 }
 
-id_token::id_token( symbol& name )
+id_token::id_token( symbol* name )
 	:token( id_tok ), name( name )
 {
+}
+
+symbol* id_token::get_name() const
+{
+	return name;
 }
 
 std::string id_token::kind()
@@ -167,4 +172,5 @@ keyword_table::keyword_table()
 	insert( { "var", var_kw_tok } );
 	insert( { "int", int_kw_tok } );
 	insert( { "bool", bool_kw_tok } );
+	insert( { "print", print_kw_tok } );
 }

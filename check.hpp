@@ -25,6 +25,8 @@ struct check_visitor : expr::visitor
 	void visit( greater_expr& e );
 	void visit( lesseq_expr& e );
 	void visit( greatereq_expr& e );
+	void visit( ref_expr& e );
+	void visit( value_expr& e );
 };
 
 const type* check( expr& e );

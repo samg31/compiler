@@ -3,6 +3,7 @@
 
 #include <deque>
 #include <memory>
+#include <list>
 
 #include "lexer.hpp"
 #include "context.hpp"
@@ -17,10 +18,11 @@ class parser
 {
 	lexer& m_lexer;
 	context& m_cxt;
+	std::list<scope>& m_stack;
 	std::deque<token_ptr> tokens;
 	translator sema;
 public:	
-	parser( lexer& l, context& cxt );
+	parser( lexer& l, context& cxt, std::list<scope>& m_scope );
 
 	token_kind lookahead();
 	token_ptr consume();
@@ -37,8 +39,11 @@ public:
 	expr* ordering_expression();	
 	expr* unary_expression();	
 	expr* primary_expression();
+	expr* id_expression();
 
 	stmt* statement();
+	stmt* print_statement();
+	stmt* block_statement();
 	stmt* declaration_statement();
 	stmt* expression_statement();
 

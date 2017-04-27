@@ -10,6 +10,8 @@ enum token_kind
 	eof_tok,
 	lparen_tok,
 	rparen_tok,
+	lbrace_tok,
+	rbrace_tok,
 	ampersand_tok,
 	bar_tok,
 	caret_tok,
@@ -35,7 +37,8 @@ enum token_kind
 	false_kw_tok,
 	var_kw_tok,
 	int_kw_tok,
-	bool_kw_tok
+	bool_kw_tok,
+	print_kw_tok
 };
 
 class keyword_table : public std::unordered_map<std::string, token_kind>
@@ -87,9 +90,10 @@ public:
 
 class id_token : public token
 {
-	symbol& name;
+	symbol* name;
 public:
-	id_token( symbol& name );
+	id_token( symbol* name );
+	symbol* get_name() const;
 	std::string kind() override;
 	std::string print_value() override;
 };

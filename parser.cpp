@@ -4,9 +4,10 @@
 #include "parser.hpp"
 #include "check.hpp"
 #include "eval.hpp"
+#include "context.hpp"
 
-parser::parser( lexer& l, context& cxt )
-	:m_lexer( l ), m_cxt( cxt ), sema( translator( cxt ) )
+parser::parser( lexer& l, context& cxt, std::list<scope>& stack )
+	:m_lexer( l ), m_cxt( cxt ), sema( translator( cxt, stack ) ), m_stack( stack )
 {
 	m_lexer.lex();
 	if( auto token = std::move( m_lexer.front() ) )
@@ -177,7 +178,6 @@ expr* parser::additive_expression()
 		{
 			auto ast_2 = multiplicative_expression();
 			r = sema.on_add( *ast_1, *ast_2 );
-			std::cout << eval( *r ) << '\n';
 			return r;
 		}
 		else if( match_if( minus_tok ) )
@@ -258,9 +258,21 @@ expr* parser::primary_expression()
 		match( rparen_tok );
 		return e;
 	}
+	case id_tok:
+	{
+		return id_expression();
+		
+	}
 	}
 
 	return nullptr;
+}
+
+expr* parser::id_expression()
+{
+	auto next = &( *consume() );
+	auto next_id = static_cast<id_token*>( next );
+	return sema.on_ref( *next_id );
 }
 
 // STATEMENT PARSING
@@ -269,11 +281,32 @@ stmt* parser::statement()
 {
 	switch( lookahead() )
 	{
+	case lbrace_tok:
+		return block_statement();
 	case var_kw_tok:
 		return declaration_statement();
+	case print_kw_tok:
+		return print_statement();
 	default:
 		return expression_statement();
 	}
+}
+
+stmt* parser::print_statement()
+{
+	consume();
+	auto e = expression();
+	match( semicolon_tok );
+	std::cout << eval( *e ) << '\n';
+
+	// return null because this function does not generate actual code
+	return nullptr;
+}
+
+stmt* block_statement()
+{
+	// enter a new block scope
+	m_stack.emplace_front();
 }
 
 stmt* parser::declaration_statement()

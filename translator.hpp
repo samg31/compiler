@@ -2,18 +2,22 @@
 #define TRANSLATOR_HPP
 
 #include <memory>
+#include <list>
 
 #include "expr.hpp"
 #include "context.hpp"
 #include "token.hpp"
 #include "decl.hpp"
 #include "stmt.hpp"
+#include "scope.hpp"
 
 class translator
 {
 	context& m_cxt;
+	std::list<scope>& m_stack;
+	const type* next_type;
 public:
-	translator( context& cxt );
+	translator( context&, std::list<scope>& );
 	expr* on_cond( expr&, expr&, expr& );
 	expr* on_or( expr&, expr& );
 	expr* on_and( expr&, expr& );
@@ -38,14 +42,16 @@ public:
 	expr* on_bool( bool_token& );
 	expr* on_int( int_token& );
 
+	expr* on_ref( id_token& );
+
 	stmt* on_decl_stmt( decl* );
 	stmt* on_expr_stmt( expr* );
 
 	decl* on_var_decl( const type*, symbol* );
 	decl* on_var_compl( decl*, expr* );
 
-	const type* on_bool_type() const;
-	const type* on_int_type() const;
+	const type* on_bool_type();
+	const type* on_int_type();
 
 	symbol* on_id( token* t );
 

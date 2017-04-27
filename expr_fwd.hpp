@@ -26,4 +26,7 @@ class greater_expr;
 class lesseq_expr;
 class greatereq_expr;
 
+class value_expr;
+class ref_expr;
+
 #endif

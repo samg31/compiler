@@ -90,6 +90,17 @@ void check_visitor::visit( greatereq_expr& e )
 	r = &e.get_context().bool_ty;
 }
 
+void check_visitor::visit( ref_expr& e )
+{
+	r = e.get_type();
+}
+
+void check_visitor::visit( value_expr& e )
+{
+	auto parent = static_cast<ref_expr*>( e.get_parent() );
+	r = parent->get_type();
+}
+
 const type* check( expr& e )
 {
 	check_visitor v;

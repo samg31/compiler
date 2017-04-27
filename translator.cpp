@@ -4,9 +4,10 @@
 #include "check.hpp"
 #include "eval.hpp"
 #include "translator.hpp"
+#include "util.hpp"
 
-translator::translator( context& cxt )
-	:m_cxt( cxt )
+translator::translator( context& cxt, std::list<scope>& stack )
+	:m_cxt( cxt ), m_stack( stack ), next_type()
 {
 }
 
@@ -274,6 +275,24 @@ expr* translator::on_neg( expr& ast_1 )
 	return new neg_expr( ast_1, m_cxt );
 }
 
+expr* translator::on_ref( id_token& identifier )
+{
+	auto declaration = scope_lookup( m_stack, identifier.get_name() );
+
+	// if the declaration was not found in any scope
+	if( !declaration )
+	{
+		std::stringstream ss;
+		ss << "Use of undeclared identifier " << identifier.get_name()
+		   << '\n';
+		throw std::runtime_error( ss.str().c_str() );
+	}
+			
+	auto val = static_cast<var_decl*>( declaration );
+	auto ty = val->m_type;
+	return new ref_expr( declaration, val->m_init, ty, m_cxt );
+}
+
 stmt* translator::on_decl_stmt( decl* d )
 {
 	return new decl_stmt( d );
@@ -287,25 +306,35 @@ stmt* translator::on_expr_stmt( expr* e )
 decl* translator::on_var_decl( const type* t, symbol* n )
 {
 	var_decl* var = new var_decl( n, t );
-	// add the declaration of n as a variable
-	return var;
+	// add the declaration to the scope
+	if( m_stack.front().insert( n, var ) )
+		return var;
+	// insertion will fail if this (name,decl) mapping already exists
+	else
+	{
+		std::stringstream ss;
+		ss << "identifier" << *n << "already exists\n";
+		throw std::runtime_error( ss.str().c_str() );
+	}
 }
 
 decl* translator::on_var_compl( decl* d, expr* e )
 {
 	var_decl* var = static_cast<var_decl*>( d );
+	var->m_type = next_type;
+	next_type = nullptr;
 	var->set_init( e );
 	return var;
 }
 
-const type* translator::on_bool_type() const
+const type* translator::on_bool_type()
 {
-	return &m_cxt.bool_ty;
+	next_type = &m_cxt.bool_ty;
 }
 
-const type* translator::on_int_type() const
+const type* translator::on_int_type()
 {
-	return &m_cxt.int_ty;
+	next_type = &m_cxt.int_ty;
 }
 
 symbol* translator::on_id( token* t )

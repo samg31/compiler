@@ -6,12 +6,13 @@
 #include "expr_fwd.hpp"
 #include "context.hpp"
 
+class decl;
+
 class expr
 {
 public:
     struct visitor;
     virtual void accept( visitor& ) = 0;
-    virtual void print() { std::cout << "hello"; }
     virtual ~expr() = default;
 };
 
@@ -35,6 +36,8 @@ struct expr::visitor
     virtual void visit( greater_expr& ) = 0;
     virtual void visit( lesseq_expr& ) = 0;
     virtual void visit( greatereq_expr& ) = 0;
+	virtual void visit( ref_expr& ) = 0;
+	virtual void visit( value_expr& ) = 0;
 };
 
 class bool_expr : public expr
@@ -42,7 +45,6 @@ class bool_expr : public expr
     context& cxt;
     int value;
 public:
-    void print() { std::cout << "bool_expr"; }
     bool_expr( int, context& );
     void accept( visitor& );
     int get_value() const;
@@ -55,7 +57,6 @@ class and_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "and_expr"; }
     and_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -69,7 +70,6 @@ class or_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "or_expr"; }
     or_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -82,7 +82,6 @@ class not_expr : public expr
     context& cxt;
     expr& e1;
 public:
-    void print() { std::cout << "not_expr"; }
     not_expr( expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -96,7 +95,6 @@ class cond_expr : public expr
     expr& e2;
     expr& e3;
 public:
-    void print() { std::cout << "cond_expr"; }
     cond_expr( expr&, expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -111,7 +109,6 @@ class equal_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "equal_expr"; }
     equal_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -125,7 +122,6 @@ class inequal_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "inequal_expr"; }
     inequal_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -138,7 +134,6 @@ class int_expr : public expr
     context& cxt;
     int value;
 public:
-    void print() { std::cout << "int_expr"; }
     int_expr( int value, context& );
     void accept( visitor& );
     int get_value() const;
@@ -150,7 +145,6 @@ class neg_expr : public expr
     context& cxt;
     expr& e1;
 public:
-    void print() { std::cout << "neg_expr"; }
     neg_expr( expr&, context& );
     void accept( visitor& ) override;
     expr& get_e1() const;
@@ -163,7 +157,6 @@ class add_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "add_expr"; }
     add_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -177,7 +170,6 @@ class sub_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "sub_expr"; }
     sub_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -191,7 +183,6 @@ class mul_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "mul_expr"; }
     mul_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -205,7 +196,6 @@ class div_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "div_expr"; }
     div_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -219,7 +209,6 @@ class rem_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "rem_expr"; }
     rem_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -233,7 +222,6 @@ class less_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "less_expr"; }
     less_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -247,7 +235,6 @@ class greater_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "greater_expr"; }
     greater_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -261,7 +248,6 @@ class lesseq_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "lesseq_expr"; }
     lesseq_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
@@ -275,12 +261,42 @@ class greatereq_expr : public expr
     expr& e1;
     expr& e2;
 public:
-    void print() { std::cout << "greatereq_expr"; }
     greatereq_expr( expr&, expr&, context& );
     void accept( visitor& );
     expr& get_e1() const;
     expr& get_e2() const;
     context& get_context() const;
 };
+
+class ref_expr : public expr
+{
+public:
+	context& cxt;
+	decl* reference;
+	value_expr* val;
+	const type* m_type;
+public:
+	ref_expr( decl*, expr*, const type*, context& );
+	decl* get_reference() const;
+	value_expr* get_value() const;
+	const type* get_type() const;
+	context& get_context() const;
+	void set_value( expr* );
+	void accept( visitor& );
+};
+
+class value_expr : public expr
+{
+	context& cxt;
+	expr* e;
+	expr* parent;
+public:
+	value_expr( expr*, context& );
+	expr* get_expression() const;
+	expr* get_parent() const;
+	void set_parent( expr* );
+	void accept( visitor& );
+};
+
 
 #endif

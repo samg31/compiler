@@ -436,3 +436,67 @@ context& greatereq_expr::get_context() const
 {
 	return cxt;
 }
+
+ref_expr::ref_expr( decl* reference, expr* ref_val, const type* ty, context& cxt )
+	:reference( reference ), cxt( cxt ),
+	 val( new value_expr( ref_val, cxt ) ), m_type( ty )
+{
+	val->set_parent( this );
+}
+
+decl* ref_expr::get_reference() const
+{
+	return reference;
+}
+
+value_expr* ref_expr::get_value() const
+{
+	return val;
+}
+
+const type* ref_expr::get_type() const
+{
+	return m_type;
+}
+
+context& ref_expr::get_context() const
+{
+	return cxt;
+}
+
+void ref_expr::set_value( expr* new_value )
+{
+	auto temp = val;
+	val = new value_expr( new_value, cxt );
+	delete temp;
+}
+
+void ref_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}
+
+value_expr::value_expr( expr* val, context& cxt )
+	:e( val ), cxt( cxt )
+{
+}
+
+expr* value_expr::get_expression() const
+{
+	return e;
+}
+
+expr* value_expr::get_parent() const
+{
+	return parent;
+}
+
+void value_expr::set_parent( expr* p )
+{
+	parent = p;
+}
+
+void value_expr::accept( visitor& v )
+{
+	v.visit( *this );
+}

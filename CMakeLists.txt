@@ -12,4 +12,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 						   
 add_executable(var_unit var_ut.cpp decl.cpp stmt.cpp parser.cpp lexer.cpp 
 						token.cpp expr.cpp eval.cpp check.cpp symbol.cpp
-						translator.cpp)
+						translator.cpp scope.cpp value.cpp)
+
+add_executable(eval_test eval_test.cpp decl.cpp stmt.cpp parser.cpp lexer.cpp 
+						token.cpp expr.cpp eval.cpp check.cpp symbol.cpp
+						translator.cpp scope.cpp value.cpp)
