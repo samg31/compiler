@@ -13,3 +13,8 @@ void var_decl::set_init( expr* e )
 	else
 		m_init = e;
 }
+
+program_decl::program_decl( std::vector<stmt*> stmt_seq )
+	:statement_seq( stmt_seq )
+{
+}
