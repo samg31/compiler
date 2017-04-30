@@ -53,6 +53,20 @@ void lexer::lex()
 			tokens.push( std::move( r ) );
 			break;
 		}
+		case '{':
+		{
+			consume();
+			r = token_ptr( new punc_token( lbrace_tok ) );
+			tokens.push( std::move( r ) );
+			break;
+		}
+		case '}':
+		{
+			consume();
+			r = token_ptr( new punc_token( rbrace_tok ) );
+			tokens.push( std::move( r ) );
+			break;
+		}
 		case '&':
 		{
 			consume();
