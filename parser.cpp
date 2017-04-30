@@ -295,6 +295,18 @@ expr* parser::id_expression()
 
 // STATEMENT PARSING
 
+decl* parser::program()
+{
+	std::vector<stmt*> sequence;
+
+	while( !tokens.empty() )
+	{
+		sequence.push_back( statement() );
+	}
+
+	return sema.on_program( sequence );
+}
+
 stmt* parser::statement()
 {
 	switch( lookahead() )
@@ -305,6 +317,8 @@ stmt* parser::statement()
 		return declaration_statement();
 	case print_kw_tok:
 		return print_statement();
+	case while_kw_tok:
+		return while_statement();
 	default:
 		return expression_statement();
 	}
@@ -325,18 +339,36 @@ stmt* parser::print_statement()
 	return nullptr;
 }
 
+stmt* parser::while_statement()
+{
+	consume();
+
+	match( lparen_tok );
+	auto conditional = expression();
+	match( rparen_tok );
+	auto block = block_statement();
+	
+	return new while_stmt( conditional, block );
+}
+
 stmt* parser::block_statement()
 {
 	// enter a new block scope
 	m_stack.emplace_front();
 	stmt_seq seq;
+
+	// consume the initial lbrace_tok
+	consume();
 	
 	while( lookahead() != rbrace_tok )
 	{
 		seq.push_back( statement() );
 	}
 
-	match( rbrace_tok );
+	// consume the final rbrace_tok
+	consume();
+	
+	return new block_stmt( seq );
 }
 
 stmt* parser::declaration_statement()

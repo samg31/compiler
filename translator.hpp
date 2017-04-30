@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <list>
+#include <vector>
 
 #include "expr.hpp"
 #include "context.hpp"
@@ -59,6 +60,7 @@ public:
 
 	symbol* on_id( token* t );
 
+	decl* on_program( std::vector<stmt*> );
 };
 
 #endif

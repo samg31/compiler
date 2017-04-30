@@ -287,16 +287,26 @@ expr* translator::on_ref( id_token& identifier )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 
-	auto val = static_cast<var_decl*>( declaration );
-	auto it = m_values.find( declaration );
-	auto ty = val->m_type;
-	return new ref_expr( declaration, it->second, ty, m_cxt );
+	// downcast from decl to var_decl
+	auto variable = static_cast<var_decl*>( declaration );
+
+	// find the value_expr associated with this declaration
+	auto value = m_values.find( declaration );
+
+	// find the type associated with this declaration
+	auto ty = variable->m_type;
+	
+	return new ref_expr( declaration, value->second, ty, m_cxt );
 }
 
 expr* translator::on_assign( expr* ast_1, expr* ast_2 )
 {
+	// create a reference to the assigned variable (to be returned)
 	auto var = static_cast<ref_expr*>( ast_1 );
+
+	// find the declaration associated with that reference
 	auto ref = static_cast<var_decl*>( var->get_reference() );
+
 	auto declaration = scope_lookup( m_stack, ref->m_name );
 
 	// if the declaration was not found in any scope
@@ -307,9 +317,12 @@ expr* translator::on_assign( expr* ast_1, expr* ast_2 )
 		throw std::runtime_error( ss.str().c_str() );
 	}
 
+	// associate var's value with the expression in ast_2
 	var->set_value( ast_2 );
-	auto it = m_values.find( declaration );
-	it->second = ast_2;
+
+	// find and set the value associated with the declaration to ast_2
+	auto value = m_values.find( declaration );
+	value->second = ast_2;
 	
 	return var;
 }
@@ -365,4 +378,9 @@ symbol* translator::on_id( token* t )
 {
 	auto id = dynamic_cast<id_token*>( t );
 	return id->get_name();
+}
+
+decl* translator::on_program( std::vector<stmt*> sequence )
+{
+	return new program_decl( sequence );
 }

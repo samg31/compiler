@@ -32,6 +32,17 @@ class block_stmt : public stmt
 	std::vector<stmt*> stmts;
 public:
 	block_stmt( std::initializer_list<stmt*> );
+	block_stmt( std::vector<stmt*> );
+};
+
+class while_stmt : public stmt
+{
+	expr* condition;
+	stmt* block;
+public:
+	while_stmt( expr*, stmt*  );
+	expr* get_condition() const;
+	stmt* get_block() const;
 };
 
 #endif

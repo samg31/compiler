@@ -28,19 +28,20 @@ int main()
 	stk.emplace_front();
 
 	bool quit = false;
+	std::string input;
 
 	while( !quit )
 	{
-		std::string input;
 		std::string line;
 		getline(std::cin, line);
-		input += line + '\n';
+
+		if( line == "quit" )
+			quit = true;
+		else 
+			input += line + '\n';
 		// input = "var int x = 5; print 5;";
 		// input = "5 + 7;";
-		lexer l ( input.begin(), input.end(), kw, sym );
-
-		parser p( l, context, stk, vm );
-		stmt* s = p.statement();
+		
 		// if( dynamic_cast<expr_stmt*>(s) )
 		// {
 		// 	expr_stmt* exst = dynamic_cast<expr_stmt*>( s );			
@@ -58,6 +59,9 @@ int main()
 		// }
 		// break;
 	}
-
+	lexer l ( input.begin(), input.end(), kw, sym );
+	parser p( l, context, stk, vm );
+	p.program();
+	
 	return 0;
 }
