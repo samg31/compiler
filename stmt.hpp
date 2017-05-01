@@ -45,4 +45,13 @@ public:
 	stmt* get_block() const;
 };
 
+class if_stmt : public stmt
+{
+	expr* condition;
+	stmt* block;
+public:
+	if_stmt( expr*, stmt*  );
+	expr* get_condition() const;
+	stmt* get_block() const;
+};
 #endif

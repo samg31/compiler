@@ -46,6 +46,7 @@ public:
 	stmt* statement();
 	stmt* print_statement();
 	stmt* while_statement();
+	stmt* if_statement();
 	stmt* block_statement();
 	stmt* declaration_statement();
 	stmt* expression_statement();

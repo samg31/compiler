@@ -38,7 +38,9 @@ enum token_kind
 	var_kw_tok,
 	int_kw_tok,
 	bool_kw_tok,
-	print_kw_tok
+	print_kw_tok,
+	while_kw_tok,
+	if_kw_tok
 };
 
 class keyword_table : public std::unordered_map<std::string, token_kind>

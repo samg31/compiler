@@ -319,6 +319,8 @@ stmt* parser::statement()
 		return print_statement();
 	case while_kw_tok:
 		return while_statement();
+	case if_kw_tok:
+		return if_statement();
 	default:
 		return expression_statement();
 	}
@@ -349,6 +351,18 @@ stmt* parser::while_statement()
 	auto block = block_statement();
 	
 	return new while_stmt( conditional, block );
+}
+
+stmt* parser::if_statement()
+{
+	consume();
+
+	match( lparen_tok );
+	auto conditional = expression();
+	match( rparen_tok );
+	auto block = block_statement();
+	
+	return new if_stmt( conditional, block );
 }
 
 stmt* parser::block_statement()

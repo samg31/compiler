@@ -40,3 +40,18 @@ stmt* while_stmt::get_block() const
 {
 	return block;
 }
+
+if_stmt::if_stmt( expr* condition, stmt* block )
+	:condition( condition ), block( block )
+{
+}
+
+expr* if_stmt::get_condition() const
+{
+	return condition;
+}
+
+stmt* if_stmt::get_block() const
+{
+	return block;
+}
