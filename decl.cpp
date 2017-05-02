@@ -35,6 +35,16 @@ const std::vector<decl*>& function_decl::get_param() const
 	return param;
 }
 
+param_decl::param_decl( symbol* name, const type* ty )
+	:name( name ), ty( ty )
+{
+}
+
+param_decl::param_decl( symbol* name, const type* ty, expr* init )
+	:name( name ), ty( ty ), init( init )
+{
+}
+
 program_decl::program_decl( std::vector<stmt*> stmt_seq )
 	:statement_seq( stmt_seq )
 {

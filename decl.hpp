@@ -48,6 +48,20 @@ public:
 	decl* ret;
 };
 
+class param_decl : public decl
+{
+	symbol* name;
+	const type* ty;
+public:
+	param_decl( symbol*, const type* );
+	param_decl( symbol*, const type*, expr* );
+
+	symbol* get_name() const;
+	const type* get_type() const;
+
+	expr* init;
+};
+
 class program_decl : public decl
 {
 	std::vector<stmt*> statement_seq;
