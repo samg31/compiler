@@ -46,7 +46,7 @@ public:
 	
 	stmt* body;
 	decl* ret;
-}
+};
 
 class program_decl : public decl
 {
