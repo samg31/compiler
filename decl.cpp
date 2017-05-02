@@ -14,7 +14,33 @@ void var_decl::set_init( expr* e )
 		m_init = e;
 }
 
+function_decl::function_decl(
+	symbol* name, const type* ret_type, std::vector<decl*>& param )
+	:name( name ), return_type( ret_type ), param( param )
+{
+}
+
+symbol* function_decl::get_name() const
+{
+	return name;
+}
+
+const type* function_decl::get_ret_type() const
+{
+	return return_type;
+}
+
+const std::vector<decl*>& function_decl::get_param() const
+{
+	return param;
+}
+
 program_decl::program_decl( std::vector<stmt*> stmt_seq )
 	:statement_seq( stmt_seq )
 {
+}
+
+const std::vector<stmt*>& program_decl::get_stmt_seq() const
+{
+	return statement_seq;
 }
