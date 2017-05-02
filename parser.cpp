@@ -97,7 +97,7 @@ expr* parser::conditional_expression()
 			match( colon_tok );
 			
 			auto ast_3 = assignment_expression();
-			ast_1 = std::move( sema.on_cond( *ast_1, *ast_2, *ast_3 ) );
+			ast_1 = std::move( sema.on_cond( ast_1, ast_2, ast_3 ) );
 		}
 		else break;
 	}
@@ -112,7 +112,7 @@ expr* parser::logical_or_expression()
 		if( match_if( bar_tok ) )
 		{
 			auto ast_2 = logical_and_expression();
-			ast_1 = sema.on_or( *ast_1, *ast_2 );
+			ast_1 = sema.on_or( ast_1, ast_2 );
 		}
 		else break;
 	}
@@ -127,7 +127,7 @@ expr* parser::logical_and_expression()
 		if( match_if( ampersand_tok ) )
 		{
 			auto ast_2 = equality_expression();
-			ast_1 = sema.on_and( *ast_1, *ast_2 );
+			ast_1 = sema.on_and( ast_1, ast_2 );
 		}
 		else break;
 	}
@@ -142,12 +142,12 @@ expr* parser::equality_expression()
 		if( match_if( equal_tok ) )
 		{
 			auto ast_2 = ordering_expression();
-			ast_1 = sema.on_equal( *ast_1, *ast_2 );
+			ast_1 = sema.on_equal( ast_1, ast_2 );
 		}
 		else if( match_if( exclmeq_tok ) )
 		{
 			auto ast_2 = ordering_expression();
-			ast_1 = sema.on_inequal( *ast_1, *ast_2 );
+			ast_1 = sema.on_inequal( ast_1, ast_2 );
 		}
 		else break;
 	}
@@ -162,22 +162,22 @@ expr* parser::ordering_expression()
 		if( match_if( less_tok ) )
 		{
 			auto ast_2 = additive_expression();
-			ast_1 = sema.on_less( *ast_1, *ast_2 );
+			ast_1 = sema.on_less( ast_1, ast_2 );
 		}
 		else if( match_if( greater_tok ) )
 		{
 			auto ast_2 = additive_expression();
-			ast_1 = sema.on_greater( *ast_1, *ast_2 );
+			ast_1 = sema.on_greater( ast_1, ast_2 );
 		}
 		else if( match_if( lesseq_tok ) )
 		{
 			auto ast_2 = additive_expression();
-			ast_1 = sema.on_lesseq( *ast_1, *ast_2 );
+			ast_1 = sema.on_lesseq( ast_1, ast_2 );
 		}
 		else if( match_if( greatereq_tok ) )
 		{
 			auto ast_2 = additive_expression();
-			ast_1 = sema.on_greatereq( *ast_1, *ast_2 );
+			ast_1 = sema.on_greatereq( ast_1, ast_2 );
 		}
 		else break;
 	}
@@ -195,13 +195,13 @@ expr* parser::additive_expression()
 		if( match_if( plus_tok ) )
 		{
 			auto ast_2 = multiplicative_expression();
-			r = sema.on_add( *ast_1, *ast_2 );
+			r = sema.on_add( ast_1, ast_2 );
 			return r;
 		}
 		else if( match_if( minus_tok ) )
 		{
 			auto ast_2 = multiplicative_expression();
-			r = sema.on_sub( *ast_1, *ast_2 );
+			r = sema.on_sub( ast_1, ast_2 );
 			return r;
 		}
 		else break;
@@ -217,17 +217,17 @@ expr* parser::multiplicative_expression()
 		if( match_if( asterix_tok ) )
 		{
 		    auto ast_2 = unary_expression();
-			ast_1 = sema.on_mul( *ast_1, *ast_2 );
+			ast_1 = sema.on_mul( ast_1, ast_2 );
 		}
 		else if( match_if( slash_tok ) )
 		{
 		    auto ast_2 = unary_expression();
-			ast_1 = sema.on_div( *ast_1, *ast_2 );
+			ast_1 = sema.on_div( ast_1, ast_2 );
 		}
 		else if( match_if( percent_tok ) )
 		{
 		    auto ast_2 = unary_expression();
-			ast_1 = sema.on_rem( *ast_1, *ast_2 );
+			ast_1 = sema.on_rem( ast_1, ast_2 );
 		}		
 		else break;
 	}
@@ -239,12 +239,12 @@ expr* parser::unary_expression()
 	if( match_if( minus_tok ) )
 	{
 		auto ast_1 = unary_expression();
-		return sema.on_neg( *ast_1 );
+		return sema.on_neg( ast_1 );
 	}
 	else if( match_if( exclm_tok ) )
 	{
 		auto ast_1 = unary_expression();
-		return sema.on_not( *ast_1 );
+		return sema.on_not( ast_1 );
 	}
 	else
 		return primary_expression();
@@ -335,7 +335,7 @@ stmt* parser::print_statement()
 	match( semicolon_tok );
 
 	// print the evaluation of the expression
-	std::cout << eval( *e ) << '\n';
+	std::cout << eval( e ) << '\n';
 
 	// return null because prints do not generate actual code
 	return nullptr;

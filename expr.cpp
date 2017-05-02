@@ -8,7 +8,7 @@ bool_expr::bool_expr( int value, context& cxt )
 
 void bool_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
 int bool_expr::get_value() const
@@ -21,22 +21,22 @@ context& bool_expr::get_context() const
 	return cxt;
 }
 
-and_expr::and_expr( expr& e1, expr& e2, context& cxt )
+and_expr::and_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void and_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& and_expr::get_e1() const
+expr* and_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& and_expr::get_e2() const
+expr* and_expr::get_e2() const
 {
 	return e2;
 }
@@ -46,22 +46,22 @@ context& and_expr::get_context() const
 	return cxt;
 }
 
-or_expr::or_expr( expr& e1, expr& e2, context& cxt )
+or_expr::or_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void or_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& or_expr::get_e1() const
+expr* or_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& or_expr::get_e2() const
+expr* or_expr::get_e2() const
 {
 	return e2;
 }
@@ -71,17 +71,17 @@ context& or_expr::get_context() const
 	return cxt;
 }
 
-not_expr::not_expr( expr& e1, context& cxt )
+not_expr::not_expr( expr* e1, context& cxt )
 	:e1(e1), cxt( cxt )
 {
 }
 
 void not_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& not_expr::get_e1() const
+expr* not_expr::get_e1() const
 {
 	return e1;
 }
@@ -91,28 +91,28 @@ context& not_expr::get_context() const
 	return cxt;
 }
 
-cond_expr::cond_expr( expr& e1, expr& e2,
-					  expr& e3, context& cxt )
+cond_expr::cond_expr( expr* e1, expr* e2,
+					  expr* e3, context& cxt )
 	:e1( e1 ), e2( e2 ), e3( e3 ), cxt( cxt )
 {
 }
 
 void cond_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& cond_expr::get_e1() const
+expr* cond_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& cond_expr::get_e2() const
+expr* cond_expr::get_e2() const
 {
 	return e2;
 }
 
-expr& cond_expr::get_e3() const
+expr* cond_expr::get_e3() const
 {
 	return e3;
 }
@@ -122,22 +122,22 @@ context& cond_expr::get_context() const
 	return cxt;
 }
 
-equal_expr::equal_expr( expr& e1, expr& e2, context& cxt )
+equal_expr::equal_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void equal_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& equal_expr::get_e1() const
+expr* equal_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& equal_expr::get_e2() const
+expr* equal_expr::get_e2() const
 {
 	return e2;
 }
@@ -147,22 +147,22 @@ context& equal_expr::get_context() const
 	return cxt;
 }
 
-inequal_expr::inequal_expr( expr& e1, expr& e2, context& cxt )
+inequal_expr::inequal_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void inequal_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& inequal_expr::get_e1() const
+expr* inequal_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& inequal_expr::get_e2() const
+expr* inequal_expr::get_e2() const
 {
 	return e2;
 }
@@ -184,7 +184,7 @@ int int_expr::get_value() const
 
 void int_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
 context& int_expr::get_context() const
@@ -192,17 +192,17 @@ context& int_expr::get_context() const
 	return cxt;
 }
 
-neg_expr::neg_expr( expr& e, context& cxt )
+neg_expr::neg_expr( expr* e, context& cxt )
 	:e1( e ), cxt( cxt )
 {
 }
 
 void neg_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& neg_expr::get_e1() const
+expr* neg_expr::get_e1() const
 {
 	return e1;
 };
@@ -212,22 +212,22 @@ context& neg_expr::get_context() const
 	return cxt;
 }
 
-add_expr::add_expr( expr& e1, expr& e2, context& cxt )
+add_expr::add_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void add_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& add_expr::get_e1() const
+expr* add_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& add_expr::get_e2() const
+expr* add_expr::get_e2() const
 {
 	return e2;
 }
@@ -237,22 +237,22 @@ context& add_expr::get_context() const
 	return cxt;
 }
 
-sub_expr::sub_expr( expr& e1, expr& e2, context& cxt )
+sub_expr::sub_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void sub_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& sub_expr::get_e1() const
+expr* sub_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& sub_expr::get_e2() const
+expr* sub_expr::get_e2() const
 {
 	return e2;
 }
@@ -262,22 +262,22 @@ context& sub_expr::get_context() const
 	return cxt;
 }
 
-mul_expr::mul_expr( expr& e1, expr& e2, context& cxt )
+mul_expr::mul_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void mul_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& mul_expr::get_e1() const
+expr* mul_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& mul_expr::get_e2() const
+expr* mul_expr::get_e2() const
 {
 	return e2;
 }
@@ -287,22 +287,22 @@ context& mul_expr::get_context() const
 	return cxt;
 }
 
-div_expr::div_expr( expr& e1, expr& e2, context& cxt )
+div_expr::div_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void div_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& div_expr::get_e1() const
+expr* div_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& div_expr::get_e2() const
+expr* div_expr::get_e2() const
 {
 	return e2;
 }
@@ -312,22 +312,22 @@ context& div_expr::get_context() const
 	return cxt;
 }
 
-rem_expr::rem_expr( expr& e1, expr& e2, context& cxt )
+rem_expr::rem_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void rem_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& rem_expr::get_e1() const
+expr* rem_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& rem_expr::get_e2() const
+expr* rem_expr::get_e2() const
 {
 	return e2;
 }
@@ -337,22 +337,22 @@ context& rem_expr::get_context() const
 	return cxt;
 }
 
-less_expr::less_expr( expr& e1, expr& e2, context& cxt )
+less_expr::less_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void less_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& less_expr::get_e1() const
+expr* less_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& less_expr::get_e2() const
+expr* less_expr::get_e2() const
 {
 	return e2;
 }
@@ -362,22 +362,22 @@ context& less_expr::get_context() const
 	return cxt;
 }
 
-greater_expr::greater_expr( expr& e1, expr& e2, context& cxt )
+greater_expr::greater_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void greater_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& greater_expr::get_e1() const
+expr* greater_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& greater_expr::get_e2() const
+expr* greater_expr::get_e2() const
 {
 	return e2;
 }
@@ -387,22 +387,22 @@ context& greater_expr::get_context() const
 	return cxt;
 }
 
-lesseq_expr::lesseq_expr( expr& e1, expr& e2, context& cxt )
+lesseq_expr::lesseq_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void lesseq_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& lesseq_expr::get_e1() const
+expr* lesseq_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& lesseq_expr::get_e2() const
+expr* lesseq_expr::get_e2() const
 {
 	return e2;
 }
@@ -412,22 +412,22 @@ context& lesseq_expr::get_context() const
 	return cxt;
 }
 
-greatereq_expr::greatereq_expr( expr& e1, expr& e2, context& cxt )
+greatereq_expr::greatereq_expr( expr* e1, expr* e2, context& cxt )
 	:e1( e1 ), e2( e2 ), cxt( cxt )
 {
 }
 
 void greatereq_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
-expr& greatereq_expr::get_e1() const
+expr* greatereq_expr::get_e1() const
 {
 	return e1;
 }
 
-expr& greatereq_expr::get_e2() const
+expr* greatereq_expr::get_e2() const
 {
 	return e2;
 }
@@ -473,7 +473,7 @@ void ref_expr::set_value( expr* new_value )
 
 void ref_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
 }
 
 value_expr::value_expr( expr* val, context& cxt )
@@ -498,5 +498,25 @@ void value_expr::set_parent( expr* p )
 
 void value_expr::accept( visitor& v )
 {
-	v.visit( *this );
+	v.visit( this );
+}
+
+assign_expr::assign_expr( ref_expr* r, expr* v )
+	:m_reference( r ), m_new_value( v )
+{	
+}
+
+ref_expr* assign_expr::get_reference() const
+{
+	return m_reference;
+}
+
+expr* assign_expr::get_value() const
+{
+	return m_new_value;
+}
+
+void assign_expr::accept( visitor& v )
+{
+	v.visit( this );
 }

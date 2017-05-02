@@ -22,26 +22,26 @@ class translator
 	const type* next_type;
 public:
 	translator( context&, std::list<scope>&, value_map& );
-	expr* on_cond( expr&, expr&, expr& );
-	expr* on_or( expr&, expr& );
-	expr* on_and( expr&, expr& );
+	expr* on_cond( expr*, expr*, expr* );
+	expr* on_or( expr*, expr* );
+	expr* on_and( expr*, expr* );
 
-	expr* on_equal( expr&, expr& );
-	expr* on_inequal( expr&, expr& );
+	expr* on_equal( expr*, expr* );
+	expr* on_inequal( expr*, expr* );
 	
-	expr* on_less( expr&, expr& );
-	expr* on_greater( expr&, expr& );
-	expr* on_lesseq( expr&, expr& );
-	expr* on_greatereq( expr&, expr& );
+	expr* on_less( expr*, expr* );
+	expr* on_greater( expr*, expr* );
+	expr* on_lesseq( expr*, expr* );
+	expr* on_greatereq( expr*, expr* );
 
-	expr* on_add( expr&, expr& );
-	expr* on_sub( expr&, expr& );
-	expr* on_mul( expr&, expr& );
-	expr* on_div( expr&, expr& );
-	expr* on_rem( expr&, expr& );
+	expr* on_add( expr*, expr* );
+	expr* on_sub( expr*, expr* );
+	expr* on_mul( expr*, expr* );
+	expr* on_div( expr*, expr* );
+	expr* on_rem( expr*, expr* );
 
-	expr* on_not( expr& );
-	expr* on_neg( expr& );
+	expr* on_not( expr* );
+	expr* on_neg( expr* );
 	
 	expr* on_bool( bool_token& );
 	expr* on_int( int_token& );

@@ -11,7 +11,7 @@ translator::translator( context& cxt, std::list<scope>& stack, value_map& vm )
 {
 }
 
-expr* translator::on_cond( expr& ast_1, expr& ast_2, expr& ast_3 )
+expr* translator::on_cond( expr* ast_1, expr* ast_2, expr* ast_3 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -29,7 +29,7 @@ expr* translator::on_cond( expr& ast_1, expr& ast_2, expr& ast_3 )
 	return new cond_expr( ast_1, ast_2, ast_3, m_cxt );
 }
 
-expr* translator::on_or( expr& ast_1, expr& ast_2 )
+expr* translator::on_or( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -47,7 +47,7 @@ expr* translator::on_or( expr& ast_1, expr& ast_2 )
 	return new or_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_and( expr& ast_1, expr& ast_2 )
+expr* translator::on_and( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -65,7 +65,7 @@ expr* translator::on_and( expr& ast_1, expr& ast_2 )
 	return new and_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_equal( expr& ast_1, expr& ast_2 )
+expr* translator::on_equal( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != check( ast_2 ) )
 	{
@@ -77,7 +77,7 @@ expr* translator::on_equal( expr& ast_1, expr& ast_2 )
 	return new equal_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_inequal( expr& ast_1, expr& ast_2 )
+expr* translator::on_inequal( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != check( ast_2 ) )
 	{
@@ -89,7 +89,7 @@ expr* translator::on_inequal( expr& ast_1, expr& ast_2 )
 	return new inequal_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_less( expr& ast_1, expr& ast_2 )
+expr* translator::on_less( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -107,7 +107,7 @@ expr* translator::on_less( expr& ast_1, expr& ast_2 )
 	return new less_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_greater( expr& ast_1, expr& ast_2 )
+expr* translator::on_greater( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -125,7 +125,7 @@ expr* translator::on_greater( expr& ast_1, expr& ast_2 )
 	return new greater_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_lesseq( expr& ast_1, expr& ast_2 )
+expr* translator::on_lesseq( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -143,7 +143,7 @@ expr* translator::on_lesseq( expr& ast_1, expr& ast_2 )
 	return new lesseq_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_greatereq( expr& ast_1, expr& ast_2 )
+expr* translator::on_greatereq( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -161,7 +161,7 @@ expr* translator::on_greatereq( expr& ast_1, expr& ast_2 )
 	return new greatereq_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_add( expr& ast_1, expr& ast_2 )
+expr* translator::on_add( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -179,7 +179,7 @@ expr* translator::on_add( expr& ast_1, expr& ast_2 )
 	return new add_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_sub( expr& ast_1, expr& ast_2 )
+expr* translator::on_sub( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -197,7 +197,7 @@ expr* translator::on_sub( expr& ast_1, expr& ast_2 )
 	return new sub_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_mul( expr& ast_1, expr& ast_2 )
+expr* translator::on_mul( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -215,7 +215,7 @@ expr* translator::on_mul( expr& ast_1, expr& ast_2 )
 	return new mul_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_div( expr& ast_1, expr& ast_2 )
+expr* translator::on_div( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -233,7 +233,7 @@ expr* translator::on_div( expr& ast_1, expr& ast_2 )
 	return new div_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_rem( expr& ast_1, expr& ast_2 )
+expr* translator::on_rem( expr* ast_1, expr* ast_2 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
@@ -251,7 +251,7 @@ expr* translator::on_rem( expr& ast_1, expr& ast_2 )
 	return new rem_expr( ast_1, ast_2, m_cxt );
 }
 
-expr* translator::on_not( expr& ast_1 )
+expr* translator::on_not( expr* ast_1 )
 {
 	if( check( ast_1 ) != &m_cxt.bool_ty )
 	{
@@ -263,7 +263,7 @@ expr* translator::on_not( expr& ast_1 )
 	return new not_expr( ast_1, m_cxt );
 }
 
-expr* translator::on_neg( expr& ast_1 )
+expr* translator::on_neg( expr*  ast_1 )
 {
 	if( check( ast_1 ) != &m_cxt.int_ty )
 	{
