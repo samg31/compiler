@@ -174,5 +174,6 @@ keyword_table::keyword_table()
 	insert( { "bool", bool_kw_tok } );
 	insert( { "print", print_kw_tok } );
 	insert( { "while", while_kw_tok } );
-	insert( { "if", while_kw_tok } );
+	insert( { "if", if_kw_tok } );
+	insert( { "def", def_kw_tok } );
 }
