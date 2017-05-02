@@ -32,6 +32,7 @@ enum token_kind
 	percent_tok,
 	assign_tok,
 	semicolon_tok,
+	arrow_tok,
 	id_tok,
 	true_kw_tok,
 	false_kw_tok,
