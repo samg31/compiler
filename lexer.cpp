@@ -134,6 +134,7 @@ void lexer::lex()
 			{
 				consume();
 				r = token_ptr( new punc_token( arrow_tok ) );
+				tokens.push( std::move( r ) );
 			}
 			r = token_ptr( new punc_token( minus_tok ) );
 			tokens.push( std::move( r ) );
