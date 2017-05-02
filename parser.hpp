@@ -53,6 +53,8 @@ public:
 
 	decl* declaration();
 	decl* variable_declaration();
+	decl* function_declaration();
+	decl* parameter_declaration();
 
 	const type* type_specifier();
 

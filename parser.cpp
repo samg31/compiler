@@ -49,7 +49,7 @@ token_ptr parser::match( token_kind tk )
 	if( lookahead() == tk )
 		return consume();
 	else		
-		throw std::runtime_error( "unexpected token in lookahead\n" );
+		throw std::runtime_error( "matched unexpected token\n" );
 }
 
 token_ptr parser::match_if( token_kind tk )
@@ -314,6 +314,7 @@ stmt* parser::statement()
 	case lbrace_tok:
 		return block_statement();
 	case var_kw_tok:
+	case def_kw_tok:
 		return declaration_statement();
 	case print_kw_tok:
 		return print_statement();
@@ -404,6 +405,8 @@ decl* parser::declaration()
 	{
 	case var_kw_tok:
 		return variable_declaration();
+	case def_kw_tok:
+		return function_declaration();
 	}
 	throw std::runtime_error( "unexpected declaration\n" );
 }
@@ -429,6 +432,37 @@ decl* parser::variable_declaration()
 	match( semicolon_tok );
 	
 	return var;
+}
+
+decl* parser::function_declaration()
+{
+	consume();
+
+	auto name = identifier();
+	match( lparen_tok );
+	std::vector<decl*> parameters;
+
+	// if there are parameters
+	while( lookahead() != rparen_tok )
+	{
+		parameters.push_back( parameter_declaration() );
+	}
+
+	match( rparen_tok );
+	match( arrow_tok );
+
+	auto ty = type_specifier();
+
+	return new function_decl( name, ty, parameters );
+}
+
+decl* parser::parameter_declaration()
+{
+	
+	auto ty = type_specifier();
+	auto name = identifier();
+
+	return new param_decl( name, ty );
 }
 
 symbol* parser::identifier()
