@@ -130,6 +130,11 @@ void lexer::lex()
 		case '-':
 		{
 			consume();
+			if( lookahead() == '>' )
+			{
+				consume();
+				r = token_ptr( new punc_token( arrow_tok ) );
+			}
 			r = token_ptr( new punc_token( minus_tok ) );
 			tokens.push( std::move( r ) );
 			break;
